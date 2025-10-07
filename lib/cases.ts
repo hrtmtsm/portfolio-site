@@ -1,9 +1,12 @@
 // lib/cases.ts
-export const registry: Record<string, () => Promise<{ default: any }>> = {
+import type { CaseModule } from "@/types/case";
+
+export const registry = {
   runbuddy: () => import("@/content/projects/runbuddy/case"),
   classcollab: () => import("@/content/projects/classcollab/case"),
   iowa: () => import("@/content/projects/iowa/case"),
-};
+} satisfies Record<string, () => Promise<CaseModule>>;
 
-// Used by generateStaticParams
-export const slugs = Object.keys(registry);
+export type ProjectSlug = keyof typeof registry;
+
+export const slugs = Object.keys(registry) as ProjectSlug[];
