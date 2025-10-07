@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+/* Lele-style palette (soft cool gray, charcoal ink, lilac accent, optional black panels) */
+:root{
+  --background: #F6F7F9;   /* page canvas (very light cool gray) */
+  --surface:    #FFFFFF;   /* cards */
+  --surface-2:  #0E0F12;   /* optional dark/black panels */
+  --foreground: #2B3742;   /* primary ink (blue-charcoal) */
+  --muted:      #8C97A3;   /* secondary text */
+  --border:     #E6E9EE;   /* hairlines */
+  --accent:     #A9A3FF;   /* lilac accent (use sparingly) */
+  --accent-ink: #4338CA;   /* deeper accent ink if needed */
+}
+
+/* map to tailwind tokens */
+@theme inline {
+  --color-background: var(--background);
+  --color-surface:    var(--surface);
+  --color-surface-2:  var(--surface-2);
+  --color-foreground: var(--foreground);
+  --color-muted:      var(--muted);
+  --color-border:     var(--border);
+  --color-accent:     var(--accent);
+  --color-accent-ink: var(--accent-ink);
+
+  --font-sans:    var(--font-geist-sans);
+  --font-mono:    var(--font-geist-mono);
+  --font-display: var(--font-display);
+}
+
+/* your shared container (keep what you liked) */
+.container-edge {
+  @apply w-full mx-auto max-w-[clamp(1280px,97vw,1760px)] px-3 sm:px-4 lg:px-6;
+}
+
+/* Base styles */
+:root { color-scheme: light; }
+body{
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Selection matches accent family */
+::selection{ background: color-mix(in oklab, var(--accent) 22%, transparent); }
+
+/* Card helpers */
+.card       { @apply bg-surface border border-border rounded-2xl; }
+.card-dark  { background: var(--surface-2); color: white; border-color: color-mix(in oklab, white 10%, transparent); }
+
+
+.site-nav { transition: transform 200ms ease; }
+html[data-hide-nav="1"] .site-nav { transform: translateY(-100%); }
+

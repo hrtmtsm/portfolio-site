@@ -1,0 +1,1997 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="../images/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="../images/favicon/favicon.svg"
+    />
+    <link rel="shortcut icon" href="../images/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="../images/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+    <link
+      rel="manifest"
+      href="../images/favicon/web-app-manifest-192x192.png"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>ClassCollab | Haruto</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <style>
+      .carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #f2f2f2;
+        border: 1px solid #e0e0e0; /* subtle light gray border */
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 10;
+        transition: background 0.2s ease, transform 0.2s ease;
+      }
+      .carousel-btn:hover {
+        background: #e2e2e2;
+      }
+      .carousel-btn:focus {
+        outline: none;
+      }
+      .carousel-btn[disabled] {
+        opacity: 0.4;
+        cursor: default;
+      }
+      .carousel-btn svg {
+        width: 24px;
+        height: 24px;
+        stroke: #333;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .inner-left {
+        left: 40px;
+      }
+      .inner-right {
+        right: 40px;
+      }
+      @media (max-width: 768px) {
+        .inner-left {
+          left: 16px;
+        }
+        .inner-right {
+          right: 16px;
+        }
+      }
+
+      .project-media-wrap video {
+        display: block;
+        width: 100%;
+        height: auto;
+        transition: transform 0.45s ease;
+      }
+
+      .key-features {
+        display: block !important;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .feature-block {
+        display: flex !important;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 4rem;
+      }
+
+      .feature-text {
+        width: 100%;
+        margin-bottom: 2rem;
+      }
+
+      .project-media-wrap {
+        display: block;
+        width: 100%;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .project-media-wrap video {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 0;
+      }
+
+      .project-media-wrap.no-border {
+        border: none;
+      }
+    </style>
+  </head>
+  <body
+    data-bs-spy="scroll"
+    data-bs-target=".spy-scroll"
+    data-bs-target="#sidebar-menu"
+    data-bs-offset="50"
+    tabindex="0"
+  >
+    <div class="custom-cursor">
+      <span class="cursor-label">↗</span>
+    </div>
+    <nav class="navbar">
+      <a href="../index.html" class="logo">HARUTO</a>
+      <button class="hamburger" aria-label="Toggle menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="#runbuddy">Work</a></li>
+        <li>
+          <a
+            href="https://drive.google.com/file/d/1LPhqGfDcJNjp58QIAmr8-GBQVjmCyNm1/view?usp=sharing"
+            target="_blank"
+            >Resume</a
+          >
+        </li>
+        <li>
+          <a href="https://www.linkedin.com/in/hrtmtsm/" target="_blank"
+            >LinkedIn</a
+          >
+        </li>
+      </ul>
+      <div class="menu-overlay"></div>
+      <div class="slide-down-menu">
+        <div class="menu-content">
+          <a href="#runbuddy">WORK</a>
+          <a
+            href="https://drive.google.com/file/d/1LPhqGfDcJNjp58QIAmr8-GBQVjmCyNm1/view?usp=sharing"
+            target="_blank"
+            >RESUME</a
+          >
+          <a href="https://www.linkedin.com/in/hrtmtsm/" target="_blank"
+            >LINKEDIN</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <div class="spy-sidebar d-none d-md-flex flex-column" id="sidebar-menu">
+      <a class="spy-link nav-link" href="#overview">Overview</a>
+      <a class="spy-link nav-link" href="#discover">Discover</a>
+      <a class="spy-link nav-link" href="#define">Define</a>
+      <a class="spy-link nav-link" href="#ideate">Ideate</a>
+      <a class="spy-link nav-link" href="#validate">Validate</a>
+      <a class="spy-link nav-link" href="#prototyping">Prototyping</a>
+      <a class="spy-link nav-link" href="#test">Test</a>
+      <a class="spy-link nav-link" href="#iterations">Iterations</a>
+      <a class="spy-link nav-link" href="#reflection">Reflection</a>
+    </div>
+
+    <div class="container-lg mb-5 content-wrapper page-fade">
+      <div
+        class="barba-container"
+        data-barba="container"
+        data-barba-namespace="home"
+      >
+        <main class="flex-grow-1 main-content">
+          <div id="overview">
+            <div class="container-lg my-5 text-left" id="overview">
+              <div class="row">
+                <div class="col-10">
+                  <h5 class="text-start">At-A-Glance</h5>
+
+                  <h1>Forming Compatible Student Teams for Better Outcomes</h1>
+
+                  <p>
+                    <strong
+                      >Students often struggle with mismatched project
+                      teams</strong
+                    >, which can lead to unclear goals, uneven workloads, and
+                    poor collaboration. This project tackled that challenge by
+                    creating a
+                    <strong>smarter team formation process</strong> that matches
+                    students based on shared goals, working styles, and
+                    availability, while also supporting stronger course outcomes
+                    for instructors and institutions.
+                  </p>
+
+                  <p>
+                    Using Lean UX principles,
+                    <span class="underline-subtle">I conducted</span> secondary
+                    research, built rapid prototypes, and validated ideas
+                    directly with users through multiple iterations. This
+                    approach helped shape a solution that maximizes both
+                    <strong>user outcomes</strong> and
+                    <strong>business value</strong>.
+                  </p>
+                </div>
+                <div class="col-12">
+                  <div
+                    class="d-flex flex-wrap align-items-start my-5"
+                    style="gap: 4rem"
+                  >
+                    <div>
+                      <h4 class="mb-2">My Role</h4>
+                      <p class="mb-0">UX Research</p>
+                      <p class="mb-0">UX Design</p>
+                      <p class="mb-0">UI Design</p>
+                    </div>
+                    <div>
+                      <h4 class="mb-2">Skills</h4>
+                      <p class="mb-0">Secondary Research</p>
+                      <p class="mb-0">Rapid Prototyping</p>
+                      <p class="mb-0">User Validation</p>
+                      <p class="mb-0">Iterative Testing</p>
+                    </div>
+                    <div>
+                      <h4 class="mb-2">Context</h4>
+                      <p class="mb-0">8 weeks</p>
+                      <p class="mb-0">Spring 2025</p>
+                      <p class="mb-0">Solo Project</p>
+                      <p class="mb-0">Academic Projects</p>
+                    </div>
+                  </div>
+                  <img
+                    src="../images/classcollab-cover.png"
+                    class="img-fluid rounded mt-4 mb-5 hero-image"
+                    alt="Iowa Cubs Website Screenshot"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="container-lg">
+              <hr class="my-4" />
+            </div>
+            <div class="container-lg">
+              <div class="container-lg py-5 fade-up">
+                <h5 class="text-start mb-4">Business Problem</h5>
+                <h2 class="text-start mb-2">
+                  Starting a team project can feel like a gamble..?
+                </h2>
+                <p>
+                  Students often get assigned to teams randomly or based on
+                  superficial criteria like social ties, which frequently
+                  results in poor collaboration, unclear expectations, and
+                  uneven workload distribution. Instructors also lack time and
+                  data to form balanced groups, and existing tools fail to
+                  prioritize compatibility in working preferences and project
+                  goals.
+                </p>
+              </div>
+            </div>
+
+            <div class="container-lg">
+              <hr class="my-4" />
+            </div>
+
+            <div class="container-lg">
+              <div class="container-lg py-5 fade-up">
+                <h5 class="text-start mb-4">Business Outcomes</h5>
+                <h2 class="text-start mb-2">
+                  Higher Course Satisfaction and Improved Academic Outcomes
+                </h2>
+                <p>
+                  The business goal for this project is to help students
+                  experience better collaboration and achieve stronger project
+                  outcomes, which in turn raises overall course satisfaction. In
+                  the long run, this contributes to a stronger academic
+                  reputation, higher student retention, and improved
+                  institutional results. We’ll know we’re successful when we see
+                  indicators such as higher team satisfaction, more balanced
+                  workload distribution, better project outcomes, and fewer
+                  requests for team changes among our target users.
+                </p>
+              </div>
+            </div>
+
+            <div class="container-lg">
+              <hr class="my-4" />
+              <div class="container-lg py-5 fade-up">
+                <h5 class="text-start mb-4">The solution</h5>
+                <h2 class="text-start mb-2">
+                  A Transparent Process for Compatibility-Based Team Formation
+                </h2>
+                <p>
+                  Our product fills this gap by offering a thoughtfully designed
+                  team formation platform that matches students based on
+                  individual goals, skills, collaboration styles, and role
+                  preferences. It is grounded in an understanding of user needs,
+                  context, and collaborative dynamics. By doing so, it aims to
+                  improve collaboration, fairness, and learning outcomes through
+                  a user-centered, data-informed approach.
+                </p>
+
+                <section>
+                  <section>
+                    <div class="project-media-wrap no-border">
+                      <video
+                        class="project-media"
+                        autoplay
+                        loop
+                        muted
+                        playsinline
+                      >
+                        <source
+                          src="../images/classcollab-walkthrough-v2.mp4"
+                          type="video/mp4"
+                        />
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+                  </section>
+                </section>
+              </div>
+
+              <div class="container-lg">
+                <hr class="my-4" />
+              </div>
+            </div>
+          </div>
+
+          <div id="discover">
+            <div class="container-lg py-5 fade-up">
+              <h5 class="text-start mb-4">Literature Review</h5>
+              <h2 class="text-start mb-2">
+                Team Formation Practices Overlook Compatibility and Balance
+              </h2>
+
+              <p>
+                To define the problem space, I reviewed academic literature on
+                team formation in education. The key takeaway was that team
+                compatibility, especially in terms of collaboration preferences,
+                goals, and availability, plays a significant role in project
+                outcomes and student satisfaction. This led me to focus on the
+                idea that early-stage team formation should align mindsets
+                rather than rely only on skill matching. That insight shaped the
+                decision to use lightweight data inputs such as collaboration
+                styles and project goals during onboarding.
+              </p>
+              <div class="row g-4 mt-4">
+                <div class="col-md-4">
+                  <div class="p-4 rounded quote-card h-100">
+                    <p class="quote-mark">“</p>
+                    <p>
+                      Letting students
+                      <strong>freely choose teammates</strong> too early can
+                      lead to <strong>poor matches</strong>. Forming groups with
+                      balanced skills can reduce friction and improve
+                      collaboration.
+                    </p>
+                    <p class="mt-3 mb-0 text-muted">
+                      <small>Lopez et al., 2021</small>
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="p-4 rounded quote-card h-100">
+                    <p class="quote-mark">“</p>
+                    <p>
+                      Current group formation is often inefficient and
+                      <strong>relies too much on chance</strong>. Using goals,
+                      strengths, and availabilitycould help automate better
+                      matches.
+                    </p>
+                    <p class="mt-3 mb-0 text-muted">
+                      <small>Lopez et al., 2021</small>
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="col-md-4">
+                  <div class="p-4 rounded quote-card h-100">
+                    <p class="quote-mark">“</p>
+                    <p>
+                      Group strategies must
+                      <strong>consider skills, goals, and personality</strong>.
+                      Factors like collaboration style and availability strongly
+                      influence team cohesion.
+                    </p>
+                    <p class="mt-3 mb-0 text-muted">
+                      <small>Odo et al., 2019</small>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="container-lg">
+              <hr class="my-4" />
+            </div>
+          </div>
+
+          <div id="define">
+            <div class="container-lg py-5 fade-up">
+              <h5 class="text-start mb-4">proto-personas</h5>
+              <h2 class="text-start mb-2">
+                Students Who Need Better Group Work
+              </h2>
+              <p>
+                To ground the solution in real student needs, I developed two
+                proto-personas: Alex, a third-year computer science
+                undergraduate, and Rachel, a second-year cognitive science
+                graduate student. Despite their differences in academic level
+                and goals, both struggle with mismatched teams, unclear
+                expectations, and uneven workloads. Alex wants to build strong
+                portfolio projects with like-minded peers, while Rachel seeks
+                meaningful research partnerships. Together, these personas show
+                how the solution can support diverse students and highlight the
+                need for compatibility, transparency, and student agency in team
+                formation.
+              </p>
+
+              <section>
+                <div
+                  id="personasCarousel"
+                  class="carousel slide position-relative"
+                >
+                  <div class="carousel-inner rounded overflow-hidden">
+                    <!-- Slide 1 -->
+                    <div class="carousel-item active">
+                      <img
+                        src="../images/classcollab-personas-rachel.png"
+                        class="d-block w-100"
+                        alt="Persona 1"
+                      />
+                    </div>
+
+                    <div class="carousel-item">
+                      <img
+                        src="../images/classcollab-personas-alex.png"
+                        class="d-block w-100"
+                        alt="Persona 2"
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    class="carousel-btn prev inner-left carousel-control-prev-persona"
+                    aria-label="Previous"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none">
+                      <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="carousel-btn next inner-right carousel-control-next-persona"
+                    aria-label="Next"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none">
+                      <polyline points="9 6 15 12 9 18" />
+                    </svg>
+                  </button>
+                </div>
+              </section>
+            </div>
+
+            <div class="container-lg">
+              <hr class="my-4" />
+            </div>
+
+            <div class="container-lg py-5 fade-up">
+              <h5 class="text-start mb-4">Business Opportunity Statement</h5>
+              <h2 class="text-start mb-2">
+                Opportunity, Focus, and Success Metrics
+              </h2>
+
+              <section class="opportunity-statement">
+                <div class="callout">
+                  <span class="callout-icon">🎓</span>
+                  <div class="callout-content">
+                    <h6 class="label">Current State</h6>
+                    <p>
+                      The current state of group formation in academic settings
+                      has focused mainly on instructor assignment or student
+                      self-selection, rarely considering goals, collaboration
+                      styles, availability, or work preferences.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="callout">
+                  <span class="callout-icon">⚡️</span>
+                  <div class="callout-content">
+                    <h6 class="label">Gap</h6>
+                    <p>
+                      What existing products like CATME fail to address is the
+                      need for a balanced and transparent process that matches
+                      students by interpersonal fit and project goals.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="callout">
+                  <span class="callout-icon">🛠️</span>
+                  <div class="callout-content">
+                    <h6 class="label">Solution</h6>
+                    <p>
+                      Our product will address this gap by helping students form
+                      better-matched teams that support fair collaboration,
+                      clear roles, and stronger learning outcomes.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="callout">
+                  <span class="callout-icon">🎯</span>
+                  <div class="callout-content">
+                    <h6 class="label">Our Focus</h6>
+                    <p>
+                      Our initial focus will be higher education students in
+                      project-based courses.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="callout">
+                  <span class="callout-icon">✅</span>
+                  <div class="callout-content">
+                    <h6 class="label">Success Metrics</h6>
+                    <p>
+                      We’ll know we are successful when we see better-matched
+                      teams, smoother teamwork, and stronger project results.
+                    </p>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <div class="container-lg">
+              <hr class="my-4" />
+            </div>
+
+            <div class="container-lg py-5 fade-up">
+              <h5 class="text-start mb-4">User Outcomes & Benefits</h5>
+              <h2 class="text-start mb-2">Why Students Use This Product</h2>
+
+              <p>
+                This product helps students form groups that are
+                <strong>aligned</strong> with their goals, work styles, and
+                availability. By matching students intentionally, it makes group
+                work more effective and less stressful.
+              </p>
+
+              <ul>
+                <li>
+                  <strong>Align goals and interests</strong> to boost motivation
+                  and reduce conflict.
+                </li>
+                <li>
+                  <strong>Combine strengths</strong> so students feel more
+                  confident contributing.
+                </li>
+                <li>
+                  <strong>Match projects</strong> to personal or professional
+                  interests.
+                </li>
+                <li>
+                  <strong>Set clear expectations</strong> upfront to avoid
+                  confusion.
+                </li>
+                <li>
+                  <strong>Improve collaboration</strong> for better performance
+                  and satisfaction.
+                </li>
+                <li>
+                  <strong>Save time and reduce stress</strong> by preventing
+                  last-minute team reshuffling.
+                </li>
+              </ul>
+
+              <p>
+                Students benefit academically, socially, and practically when
+                they start with the right team from the beginning.
+              </p>
+            </div>
+
+            <div class="container-lg">
+              <hr class="my-4" />
+            </div>
+
+            <div class="container-lg py-5 fade-up">
+              <h5 class="text-start mb-4">Validation approach</h5>
+              <h2 class="text-start mb-2">
+                Stage-by-Stage Validation Planning
+              </h2>
+              <p>
+                I used Pirate Metrics in the early stage of the process
+                <strong>to validate whether the MVP was necessary</strong>. At
+                this stage, I <strong>focused on acquisition</strong> and
+                understanding the user funnel, looking at how students
+                discovered, signed up for, and engaged with the platform.After
+                observing retention and consistent usage, I incorporated
+                Outcome-to-Impact Mapping, I incorporated Outcome-to-Impact
+                Mapping to explore the broader educational and institutional
+                value. This phased approach helped me test user behavior early
+                and assess long-term impact after building a foundation of
+                engagement.
+              </p>
+
+              <section>
+                <table
+                  class="table table-bordered pirate-metrics-table position-relative"
+                >
+                  <thead>
+                    <tr>
+                      <th>Stage</th>
+                      <th>What I’m Measuring</th>
+                      <th>What I’m trying to Learn</th>
+                      <th>How I might Measure it</th>
+                      <th>Success Criteria (Target)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="highlight-acquisition">
+                      <td>🧲 Acquisition</td>
+                      <td>
+                        Student interest and willingness to try the platform
+                      </td>
+                      <td>
+                        Do students see value in a better team formation and
+                        want to try it in the first place?
+                      </td>
+                      <td>
+                        Landing page test with call-to-action (e.g., “Match me
+                        with a better team”)
+                      </td>
+                      <td>At least 30% of invited students click the CTA</td>
+                    </tr>
+                    <tr>
+                      <td>✅ Activation</td>
+                      <td>
+                        Whether students experience any value from the product
+                      </td>
+                      <td>
+                        Does the onboarding process result in teams students
+                        feel good about working with?
+                      </td>
+                      <td>
+                        Post-match survey (Likert scale: “How well does your
+                        team match your preferences?”)
+                      </td>
+                      <td>
+                        At least 70% say they’re satisfied with their team after
+                        1 week
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>🔒 Retention</td>
+                      <td>
+                        Whether students stick with their assigned team and
+                        continue using the system
+                      </td>
+                      <td>
+                        Are students satisfied with the team and engaged with
+                        what they are working on?
+                      </td>
+                      <td>Multiple peer-reviews to track group experience</td>
+                      <td>
+                        At least 80% of teams remain unchanged by the end of the
+                        course
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>💰 Revenue</td>
+                      <td>
+                        Higher course evaluations and program performance
+                        through well-formed teams
+                      </td>
+                      <td>
+                        Does using the platform lead to better collaboration,
+                        satisfaction, and project outcomes?
+                      </td>
+                      <td>
+                        Compare project scores, peer reviews, or team
+                        performance against past cohorts
+                      </td>
+                      <td>
+                        Average peer review score ≥ 4/5 and project scores 10%
+                        above average
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>🔁 Referral</td>
+                      <td>
+                        Willingness to recommend or reuse the platform in other
+                        courses
+                      </td>
+                      <td>
+                        Do students want to use the platform again in future
+                        teams?
+                      </td>
+                      <td>End-of-course feedback survey or quick NPS form</td>
+                      <td>
+                        At least 60% say they’d use it again in another course
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+            </div>
+
+            <div class="container-lg">
+              <hr class="my-4" />
+            </div>
+          </div>
+
+          <div id="ideate">
+            <div class="container-lg py-5 fade-up">
+              <h5 class="text-start mb-4">How Might We</h5>
+              <h1 class="hmw-heading text-start mb-2">
+                How might we help students find
+                <strong>compatible</strong> teammates with
+                <strong>shared goals</strong>, <strong>interests</strong>, and
+                <strong>working styles</strong>?
+              </h1>
+            </div>
+
+            <div class="container-lg">
+              <hr class="my-4" />
+            </div>
+
+            <div class="container-lg py-5 fade-up">
+              <h5 class="text-start mb-4">Design Studio Exercise</h5>
+              <h2 class="text-start mb-2">Explore Possible Solutions</h2>
+              <p>
+                Based on the HMW question, I used a design studio exercise with
+                a six-up template to quickly generate multiple solution ideas.
+                This helped me explore different ways to address the defined
+                problem and compare which ones best meet student needs.
+              </p>
+
+              <div class="image-container">
+                <img
+                  src="../images/classcollab-design-studio-exercise.png"
+                  class="img-fluid rounded mt-4 content-image mx-auto d-block"
+                  alt="descriptive coding"
+                  width="72%"
+                />
+              </div>
+            </div>
+
+            <div class="container-lg">
+              <hr class="my-4" />
+            </div>
+
+            <div class="container-lg py-5 fade-up">
+              <h5 class="text-start mb-4">Hypothesis Mapping</h5>
+              <h2 class="text-start mb-2">
+                Connecting Features to Business Goals and User Goals
+              </h2>
+              <p>
+                This table connects each potential solution to specific user
+                outcomes and business goals. While all ideas address the same
+                core problem of helping students form better-matched teams,
+                <strong
+                  >each one differs in how it affects the student experience and
+                  creates value for the institution</strong
+                >. This mapping clarifies what we expect each solution to
+                achieve and supports clear prioritization of which ideas to test
+                first.
+              </p>
+
+              <section>
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Business outcome</th>
+                      <th>Persona</th>
+                      <th>User outcome</th>
+                      <th>Feature</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        Higher course evaluations and program performance
+                        through well-formed teams.
+                      </td>
+                      <td>Student like Alex and Rachel</td>
+                      <td>
+                        I can join a group where everyone shares similar goals
+                        and interests
+                      </td>
+                      <td>
+                        Compatibility via past projects, onboarding survey
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Improved institutional outcomes & academic rankings
+                      </td>
+                      <td>Student like Alex and Rachel</td>
+                      <td>
+                        I enjoy the group experience and feel it improved my
+                        learning
+                      </td>
+                      <td>
+                        Prompt-based grouping, Compatibility via past projects
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Increased student internship and job placement rates
+                      </td>
+                      <td>Student like Alex and Rachel</td>
+                      <td>
+                        I’ll be able to work on what’s aligned with my interests
+                        and strength
+                      </td>
+                      <td>Interest-based channels</td>
+                    </tr>
+                    <tr>
+                      <td>Higher student retention and experience</td>
+                      <td>Student like Alex and Rachel</td>
+                      <td>
+                        I know what to expect from teammates and understand team
+                        expectations upfront
+                      </td>
+                      <td>Course-embedded analysis</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Improved academic performance in team-based projects
+                      </td>
+                      <td>Student like Alex and Rachel</td>
+                      <td>
+                        I feel confident that I’ll be able to contribute
+                        meaningfully
+                      </td>
+                      <td>Prompt-based grouping</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+            </div>
+
+            <div class="container-lg">
+              <hr class="my-4" />
+            </div>
+
+            <div class="container-lg py-5 fade-up">
+              <h5 class="text-start mb-4">Hypothesis Prioritization Canvas</h5>
+              <h2 class="text-start mb-2">Prioritize What to Test and Build</h2>
+              <p>
+                After mapping possible solutions to both business goals and user
+                needs, I prioritized them based on their potential value and
+                associated risk to decide which hypothesis to validate first.
+                This helped me focus on an idea that balanced impact with
+                feasibility and offered the best chance for meaningful early
+                results.
+              </p>
+
+              <div class="image-container">
+                <img
+                  src="../images/classcollab-hypothesis-prioritization.png"
+                  class="img-fluid rounded mt-4 content-image mx-auto d-block"
+                  alt="descriptive coding"
+                  width="100%"
+                />
+              </div>
+            </div>
+            <div class="container-lg">
+              <hr class="my-4" />
+            </div>
+
+            <div class="container-lg py-5 fade-up">
+              <h5 class="text-start mb-4">Hypothesis Risks and Criteria</h5>
+              <h2 class="text-start mb-2">Prioritized Hypothesis</h2>
+              <p>
+                When prioritizing the hypotheses, I identified risky assumptions
+                and how to validate each one. This helped me start small, test
+                critical assumptions early, and define next steps to build
+                solutions that truly matched student needs. After evaluating all
+                concepts, I decided to prioritize the Onboarding Survey because
+                it presented <strong>low risk and high value</strong>, making it
+                suitable for achieving a <strong>quick win</strong> during the
+                MVP stage. This approach could
+                <strong>leverage existing data sources</strong> such as
+                students' skills, grades, and past project performance to
+                improve team compatibility and reduce reliance on self-reported
+                preferences.
+              </p>
+
+              <section>
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Hypothesis</th>
+                      <th>Value</th>
+                      <th>Risk</th>
+                      <th>Rationale</th>
+                      <th>Risky Assumption</th>
+                      <th>What Would Invalidate It</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="highlight">
+                      <td>1</td>
+                      <td>
+                        Higher team satisfaction through onboarding and past
+                        project compatibility
+                      </td>
+                      <td>High</td>
+                      <td>Low</td>
+                      <td>
+                        Uses existing data such as skills, grades, and past
+                        projects to match students more effectively.
+                      </td>
+                      <td>
+                        Data from onboarding and past performance accurately
+                        predicts satisfaction and improves the group experience.
+                      </td>
+                      <td>
+                        Students skip or rush through onboarding, or the data
+                        does not align with actual team satisfaction.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>
+                        Stronger academic performance through prompt-based
+                        grouping
+                      </td>
+                      <td>High</td>
+                      <td>High</td>
+                      <td>
+                        Needs testing to confirm that the prompt approach
+                        supports better academic outcomes.
+                      </td>
+                      <td>
+                        Prompt responses meaningfully capture team skills and
+                        working styles.
+                      </td>
+                      <td>
+                        There is no measurable performance difference between
+                        prompt-grouped and randomly assigned teams.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>
+                        More students land jobs through interest-based project
+                        channels
+                      </td>
+                      <td>Medium</td>
+                      <td>Medium</td>
+                      <td>
+                        It is challenging to directly link group interests to
+                        future job placement without additional evidence.
+                      </td>
+                      <td>
+                        Projects aligned with student interests result in
+                        stronger portfolios and job opportunities.
+                      </td>
+                      <td>
+                        Interest-aligned projects do not produce meaningful work
+                        for portfolios or job applications.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>
+                        Improved institutional rankings through better group
+                        experiences
+                      </td>
+                      <td>High</td>
+                      <td>High</td>
+                      <td>
+                        Long-term benefit, but more data is needed to prove the
+                        link between group experiences and rankings.
+                      </td>
+                      <td>
+                        Better team experiences lead to higher course
+                        evaluations and stronger overall performance, which help
+                        improve rankings.
+                      </td>
+                      <td>
+                        There is no clear correlation between improved group
+                        satisfaction and institutional ranking metrics.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td>
+                        Better student retention supported by course-embedded
+                        analytics
+                      </td>
+                      <td>Medium</td>
+                      <td>Low</td>
+                      <td>
+                        Leverages existing course behavior and participation
+                        data to support better matches.
+                      </td>
+                      <td>
+                        Patterns in student behavior predict team compatibility
+                        and satisfaction accurately.
+                      </td>
+                      <td>
+                        Retention and satisfaction rates do not improve with
+                        analytics-based team formation.
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+            </div>
+
+            <div class="container-lg">
+              <hr class="my-4" />
+            </div>
+
+            <div class="container-lg py-5 fade-up">
+              <h5 class="text-start mb-4">Hypothesis</h5>
+              <p></p>
+
+              <h1 class="hypothesis-heading">
+                We believe we can achieve
+                <span class="highlight">higher course evaluations</span> and
+                <span class="highlight">stronger program performance</span>
+                through well-formed teams if students like Alex and Rachel join
+                groups where everyone shares
+                <span class="highlight">similar goals</span> and
+                <span class="highlight">interests</span>, supported by
+                compatibility data from
+                <span class="highlight">past projects</span> and an
+                <span class="highlight">onboarding survey</span>.
+              </h1>
+            </div>
+
+            <div class="container-lg">
+              <hr class="my-4" />
+            </div>
+
+            <div class="container-lg py-5 fade-up">
+              <h5 class="text-start mb-4">Experiments</h5>
+              <h2 class="text-start mb-2">Risky Assumptions</h2>
+              <p>
+                I listed the risky assumptions related to it to clarify the next
+                steps. This helped me start small, test critical points early,
+                and iterate effectively.
+              </p>
+
+              <section>
+                <table class="table table-bordered risky-assumptions-table">
+                  <thead>
+                    <tr>
+                      <th class="index-col">#</th>
+                      <th>Risky Assumption</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>
+                        Students care about being matched with compatible
+                        teammates.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>
+                        Students are willing and able to complete the onboarding
+                        process.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>
+                        Compatibility based on goals, past projects, and skills
+                        leads to well-formed teams and improved satisfaction.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>
+                        Past project performance is a reliable predictor of
+                        future team fit.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td>Students trust the team formation process.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+            </div>
+
+            <div class="container-lg">
+              <hr class="my-4" />
+            </div>
+          </div>
+
+          <div id="validate">
+            <div class="container-lg py-5 fade-up">
+              <h5 class="text-start mb-4">Experiments</h5>
+              <h2 class="text-start mb-2">Validate Risky Assumptions</h2>
+              <p>
+                Based on the hypothesis prioritization, I decided to start with
+                an idea that offered high perceived value and low risk, aiming
+                for a quick win. I chose to first validate a foundational
+                assumption: “Students care about being matched with compatible
+                teammates.”
+                <strong
+                  >This assumption is subjective but critical as it underpins
+                  all other project ideas and hypotheses</strong
+                >. If students are not concerned with team dynamics, investing
+                further in compatibility-focused features may be irrelevant.
+                Validating this early allows us to reduce risk and build
+                confidence before exploring additional solutions.
+              </p>
+
+              <section>
+                <h3>Assumptions to Test</h3>
+                <table class="table table-bordered mt-4">
+                  <thead>
+                    <tr>
+                      <th>Hypothesis</th>
+                      <th>Risky Assumption</th>
+                      <th>Experiment</th>
+                      <th>What I’m trying to learn</th>
+                      <th>Valid if</th>
+                      <th>Invalid if</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td rowspan="2">
+                        Higher course evaluations and program performance
+                        through well-formed teams.
+                      </td>
+                      <td>
+                        Students care about being matched with compatible
+                        teammates
+                      </td>
+                      <td>A landing page test</td>
+                      <td>
+                        See whether students are interested in a better way to
+                        form teams
+                      </td>
+                      <td>
+                        At least 30% of unique visitors click the CTA (e.g.,
+                        “Match me with a better team”) or fill out the form
+                      </td>
+                      <td>Less than 10% click the CTA or complete the form</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+
+              <section>
+                <h3>Methodology</h3>
+                <p>
+                  <strong>To test early interest and engagement</strong>, I
+                  built a simple MVP landing page with a clear CTA: “Start the
+                  team match survey.” The button linked to an embedded
+                  onboarding survey to simulate the experience. Instead of just
+                  asking if users were interested, I tracked real behavior to
+                  get unbiased insights. I also included a short survey to gauge
+                  interest, collect basic demographics like major and student
+                  level, and check if they had used similar tools before. I
+                  shared the landing page with students in my HCI program and a
+                  few product and design communities to gather diverse input.
+                  This helped me spot opportunities, clarify expectations, and
+                  see how familiar they were with existing solutions.
+                </p>
+                <section>
+                  <div class="project-media-wrap">
+                    <video
+                      class="project-media"
+                      autoplay
+                      loop
+                      muted
+                      playsinline
+                    >
+                      <source
+                        src="../images/classcollab-lp.mp4"
+                        type="video/mp4"
+                      />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                </section>
+              </section>
+
+              <section>
+                <h3 class="mb-2">Results & Next Steps</h3>
+
+                <div
+                  style="display: flex; justify-content: center; gap: 6rem; margin-bottom: 2.5rem; margin-top:2.5rem; wrap;"
+                >
+                  <div style="text-align: center">
+                    <strong style="font-size: 3rem">13</strong><br />
+                    <span>unique visitors</span>
+                  </div>
+                  <div style="text-align: center">
+                    <strong style="font-size: 3rem">8</strong><br />
+                    <span>unique clicks</span>
+                  </div>
+                  <div style="text-align: center">
+                    <strong style="font-size: 3rem">60%</strong><br />
+                    <span>click-through rate</span>
+                  </div>
+                </div>
+
+                <p>
+                  I tested early interest and engagement with a simple MVP
+                  landing page and a clear CTA, which brought in
+                  <strong>13 unique visitors</strong> and
+                  <strong>8 unique clicks</strong>, resulting in a
+                  <strong>60% click-through rate</strong>. All participants
+                  reported they had never used similar tools before, and
+                  <strong>5 out of 8</strong> shared they had struggled to form
+                  groups in the past and were somewhat interested in this idea.
+                  However, their mixed answers to “What do you think the website
+                  is trying to solve?” and feedback asking for more context
+                  showed that the value proposition needed to be clearer.
+                </p>
+
+                <p>
+                  As the next step, I created a clickable prototype with the
+                  actual onboarding questionnaire to test whether students would
+                  complete the process and better understand the concept and
+                  value behind the project.
+                </p>
+              </section>
+            </div>
+
+            <div class="container-lg">
+              <hr class="my-4" />
+            </div>
+          </div>
+
+          <div id="prototyping">
+            <div class="container-lg py-5 fade-up">
+              <h5 class="text-start mb-4">Prototyping</h5>
+              <h2 class="text-start mb-4">MVP Development</h2>
+              <p>
+                The landing page test showed early interest in the idea, but it
+                also revealed that a simple static page wasn’t enough to
+                communicate how the product would actually work. To address
+                this, I created an interactive prototype that demonstrated the
+                onboarding and matching flows.
+                <strong
+                  >This step not only made the concept more tangible, but also
+                  allowed me to validate a second key assumption</strong
+                >: Students are willing and able to complete the onboarding
+                process. With the prototype, I could observe how students
+                interacted with the flow and whether the team formation
+                experience felt meaningful in practice.
+              </p>
+
+              <section class="key-features">
+                <h3>Prototype Walkthrough</h3>
+
+                <div class="feature-block">
+                  <div class="feature-text">
+                    <h4>Student Onboarding → Team Matching → Team Overview</h4>
+                    <p>
+                      A student first completes onboarding at the start of the
+                      course by filling out a short questionnaire that captures
+                      their goals, preferred collaboration style, strengths, and
+                      project interests. The system uses this information to
+                      suggest team configurations that prioritize shared goals
+                      and compatible working styles. Once a team is confirmed,
+                      the student can view a team overview with brief profiles
+                      of their teammates, including their goals and working
+                      styles, to help everyone get to know each other and start
+                      the project smoothly.
+                    </p>
+                  </div>
+                  <div class="project-media-wrap no-border">
+                    <video
+                      class="project-media"
+                      autoplay
+                      muted
+                      loop
+                      playsinline
+                    >
+                      <source
+                        src="../images/classcollab-prototyping-walkthrough.mov"
+                        type="video/mp4"
+                      />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                </div>
+              </section>
+
+              <section>
+                <h3>Design Rationale</h3>
+                <h4>1. Onboarding Content Grounded in Insights</h4>
+                <p>
+                  Survey responses and research by Lopez et al. (2021) and Odo
+                  et al. (2019) highlighted challenges like mismatched work
+                  styles, unclear direction, and poor timing. These informed the
+                  onboarding quiz design, which includes questions about project
+                  goals, collaboration preferences, and typical team roles. The
+                  goal was to make the process lightweight yet meaningful enough
+                  to support more compatible and balanced team formation.
+                </p>
+
+                <h4>2. Need for Clearer Concept Communication</h4>
+                <p>
+                  When asked what the site was trying to solve, participants
+                  gave answers like “teammate finding system” or “help students
+                  create project teams.” One response revealed confusion,
+                  indicating the need for clearer communication. This insight
+                  directly led to developing an interactive prototype to show
+                  onboarding and team matching in action.
+                </p>
+
+                <h4>3. No Familiarity with Similar Tools</h4>
+                <p>
+                  None of the participants had used a team formation tool
+                  before. While this didn’t signal high demand, it reinforced
+                  the need to design a simple, intuitive experience that works
+                  without requiring prior tool familiarity.
+                </p>
+              </section>
+            </div>
+            <div class="container-lg">
+              <hr class="my-4" />
+            </div>
+          </div>
+
+          <div id="test">
+            <div class="container-lg py-5 fade-up">
+              <h5 class="text-start mb-4">Methodology</h5>
+              <h2 class="text-start mb-4">Unmoderated Online Testing</h2>
+
+              <div class="mt-5">
+                <h3>Participants</h3>
+                <p>
+                  I tested with seven graduate students who have participated in
+                  team-based projects, such as those in computer science or
+                  product design, and are familiar with the team formation
+                  process.
+                </p>
+              </div>
+
+              <div class="mb-5">
+                <h3>Objectives</h3>
+                <p>
+                  In the previous phase, all eight participants expressed
+                  moderate interest in the concept. While the sample size was
+                  small, the feedback was generally positive and encouraging.
+                  The previous round focused on concept validation through a
+                  landing page and survey. In this phase, I wanted to move
+                  beyond initial interest and assess
+                  <strong
+                    >whether users could understand and engage with the value,
+                    flow, and functionality of the product.</strong
+                  >
+                  Specifically, I aimed to test if users could complete the
+                  onboarding flow, understand the team matching process, and
+                  feel confident moving forward after joining a group.
+                </p>
+              </div>
+
+              <div class="mb-5">
+                <h3>Risky Assumptions to Test</h3>
+                <ul>
+                  <li>
+                    Students are willing and able to complete the onboarding
+                    process.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="mb-5">
+                <h3>Research Questions</h3>
+                <ul>
+                  <li>
+                    <strong
+                      >Do users understand the purpose and value of the
+                      onboarding flow?</strong
+                    ><br />
+                    I wanted to see whether the prompts (e.g., collaboration
+                    style, project goals) feel relevant and easy to answer, or
+                    if users need more context or examples.
+                  </li>
+                  <li>
+                    <strong
+                      >Is the process of joining a group clear and
+                      satisfying?</strong
+                    ><br />
+                    I observed whether users feel confident in selecting a group
+                    and whether the confirmation and handoff to the team
+                    overview provide a strong sense of closure.
+                  </li>
+                  <li>
+                    <strong
+                      >Does the team overview help reduce awkwardness or
+                      uncertainty?</strong
+                    ><br />
+                    I tested whether surfacing teammate info like roles and
+                    availability encourages early engagement, or if users still
+                    feel hesitant to initiate contact.
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h3>Tasks Given to Users</h3>
+                <ol>
+                  <li>
+                    Complete the onboarding form by entering your project goal,
+                    collaboration style, preferred roles, and availability.
+                  </li>
+                  <li>View and choose a recommended group to join.</li>
+                  <li>
+                    Explore the team overview and reflect on how ready you feel
+                    to meet this group.
+                  </li>
+                </ol>
+              </div>
+            </div>
+
+            <div class="container-lg">
+              <hr class="my-4" />
+            </div>
+
+            <div class="container-lg py-5 fade-up">
+              <h5 class="text-start mb-4">Results</h5>
+              <h2 class="text-start mb-4">Key Takeaways</h2>
+
+              <section>
+                <div class="mb-5">
+                  <h3>1. All Participants Completed the Full Task</h3>
+
+                  <div class="mb-4 mt-4">
+                    <h4>Observation</h4>
+                    <p>
+                      All seven participants from the target population
+                      successfully completed the onboarding questionnaire tasks.
+                      The System Usability Scale (SUS) score averaged 82.5,
+                      indicating strong perceived usability.
+                    </p>
+                  </div>
+
+                  <div class="mb-4">
+                    <h4>Interpretation</h4>
+                    <p>
+                      The fact that all participants were able to complete the
+                      onboarding without dropping off or needing assistance
+                      suggests that the onboarding flow is intuitive and
+                      well-structured. This outcome supports the second risky
+                      assumption: that students are both willing and able to
+                      complete the onboarding process when it helps them form
+                      better-matched teams. The high SUS score further confirms
+                      that the current design supports ease of use and user
+                      satisfaction.
+                    </p>
+                  </div>
+
+                  <div class="mb-4">
+                    <h4>Design Recommendations</h4>
+                    <p>
+                      Given the high SUS score and 100% task completion rate,
+                      the current onboarding experience appears to be effective
+                      for the MVP stage. No critical usability barriers were
+                      identified, so the basic navigation and interaction
+                      patterns can be retained.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="mb-5">
+                  <h3>
+                    2. 🧠 Students Want Insight into Teammates' Working Style,
+                    Personality, and Communication
+                  </h3>
+
+                  <div class="mb-4 mt-4">
+                    <h4>Observation</h4>
+                    <p>
+                      Survey responses showed students want to share more about
+                      <strong
+                        >how they work in teams, not just surface-level
+                        facts.</strong
+                      >
+                      Comments included “Ask if the person procrastinates,” “a
+                      question about work ethic,” and suggestions for including
+                      “personality types” and “preferred communication style.”
+                    </p>
+                  </div>
+
+                  <div class="mb-4">
+                    <h4>Interpretation</h4>
+                    <p>
+                      Students want the form to capture real behavior, such as
+                      how teammates meet deadlines, communicate, and adapt
+                      during projects.
+                    </p>
+                  </div>
+
+                  <div class="mb-4">
+                    <h4>Design Recommendations</h4>
+                    <p>
+                      I added scenario-based questions to reflect key traits
+                      like work ethic and conflict style. This method is
+                      supported by research on Situational Judgment Tests and
+                      allows one concise question to reveal multiple behaviors
+                      without lengthening the form.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="mb-5">
+                  <h3>
+                    3. 👥 Students Want More Context About Teammates Before
+                    Joining
+                  </h3>
+
+                  <div class="mb-4 mt-4">
+                    <h4>Observation</h4>
+                    <p>
+                      Participants said they wished they
+                      <strong>knew more about their teammates in advance</strong
+                      >. They asked for info like “how ambitious people are,”
+                      “skills and past experience,” and simply “who the members
+                      are.”
+                    </p>
+                  </div>
+
+                  <div class="mb-4">
+                    <h4>Interpretation</h4>
+                    <p>
+                      Students are more comfortable joining a team when they
+                      understand teammates’ skills, goals, and personalities
+                      beyond just names or roles.
+                    </p>
+                  </div>
+
+                  <div class="mb-4">
+                    <h4>Design Recommendations</h4>
+                    <p>
+                      I added a team preview screen that shows teammates’ goals,
+                      roles, and availability while keeping names hidden for
+                      privacy. This gives enough context to support informed
+                      decisions.
+                    </p>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+
+          <div class="container-lg">
+            <hr class="my-4" />
+          </div>
+
+          <div id="iterations">
+            <div class="container-lg py-5 fade-up">
+              <h5>Iterations</h5>
+              <h2>Two Major Iterations</h2>
+              <section>
+                <h3>
+                  Scenario-based Questions for Richer Insights in Fewer Steps
+                </h3>
+                <p>
+                  <strong>To reduce redundancy</strong>, I replaced two direct
+                  questions with one scenario-based prompt. This new format
+                  <strong>captures key compatibility factors</strong> such as
+                  work ethic, communication style, and personality in a more
+                  efficient way. Informed by SJT research and group work
+                  studies, the scenario surfaces real behavioral traits in a
+                  single, lightweight step.
+                </p>
+
+                <div class="image-container">
+                  <img
+                    src="../images/classcollab-iterations-01.png"
+                    class="img-fluid rounded mt-4 content-image mx-auto d-block"
+                    alt="design process"
+                    width="100%"
+                  />
+                </div>
+              </section>
+              <section>
+                <h3>
+                  Show Member Details Early to Support Confident Group Selection
+                </h3>
+                <p>
+                  Allowing users to view key teammate information before joining
+                  a group helps them feel more informed and confident in their
+                  decision.
+                </p>
+
+                <div class="image-container">
+                  <img
+                    src="../images/classcollab-iterations-02.png"
+                    class="img-fluid rounded mt-4 content-image mx-auto d-block"
+                    alt="design process"
+                  />
+                </div>
+              </section>
+            </div>
+            <div class="container-lg">
+              <hr class="my-4" />
+            </div>
+          </div>
+
+          <div class="container-lg py-5" id="reflection">
+            <h2>Reflection & If We Had More Time</h2>
+            <h3>Quick and Dirty, Then Iterate</h3>
+            <p>
+              I tackled this project by developing new concepts and features
+              step by step. Throughout the design process, I started small,
+              validated ideas and functions with users, and then moved on to the
+              next iteration. This approach helped me iterate effectively and
+              shape the solution to what users actually need, quickly.
+            </p>
+
+            <h3>Business Point of View</h3>
+            <p>
+              As I designed, I aimed to maximize business outcomes as well as
+              user outcomes while addressing real problems people face. This
+              point of view helped me not only solve problems for users but also
+              support business growth through design.
+            </p>
+
+            <h3>Future Iterations</h3>
+            <p>
+              I would run another round of usability testing to check whether
+              the changes I made were effective. After that, I’d validate the
+              risky assumption that “compatibility based on goals, past
+              projects, and skills leads to well-formed teams and improved
+              satisfaction.”
+            </p>
+          </div>
+
+          <div class="container-lg py-5 related-projects">
+            <h3 class="text-start mb-4">You can also check out</h3>
+            <div class="row g-5">
+              <div class="col-md-6 col-12">
+                <a
+                  href="../projects/project-runbuddy.html"
+                  class="text-decoration-none d-block"
+                >
+                  <div style="position: relative">
+                    <img
+                      src="../images/runbuddy-cover.png"
+                      class="img-fluid position-relative"
+                      alt="ClassCollab Cover"
+                    />
+                  </div>
+                  <h4 class="mt-3 text-start">RunBuddy</h4>
+                </a>
+              </div>
+              <div class="col-md-6 col-12">
+                <a
+                  href="../projects/project-iowa-cubs.html"
+                  class="text-decoration-none d-block"
+                >
+                  <div style="position: relative">
+                    <img
+                      src="../images/Iowa-cover.png"
+                      class="img-fluid position-relative"
+                      alt="Iowa Cubs Redesign Cover"
+                    />
+                  </div>
+                  <h4 class="mt-3 text-start">Iowa Cubs Redesign</h4>
+                </a>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+
+      <div class="container-lg py-5 fade-up">
+        <footer class="custom-footer">
+          <div class="footer-content">
+            <h2>Glad you made it this far :)</h2>
+            <p>
+              Feel free to reach out for collabs, design chats, or just to say
+              hey — I'm always down to connect!
+            </p>
+            <div class="footer-links">
+              <a href="https://www.linkedin.com/in/hrtmtshm/" target="_blank"
+                >LinkedIn</a
+              >
+              <a href="mailto:hrt861.dly@gmail.com">Email</a>
+              <a
+                href="https://drive.google.com/file/d/1LPhqGfDcJNjp58QIAmr8-GBQVjmCyNm1/view?usp=sharing"
+                >Resume</a
+              >
+            </div>
+            <p class="footer-note">Designed and coded by Haruto Matsushima</p>
+            <p class="footer-copy">© Haruto Matsushima 2025</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      const cards = document.querySelectorAll(".project-card");
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            } else {
+              entry.target.classList.remove("visible");
+            }
+          });
+        },
+        {
+          threshold: 0.1,
+        }
+      );
+
+      cards.forEach((card) => {
+        observer.observe(card);
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      const cursor = document.querySelector(".custom-cursor");
+      const clickableElements = document.querySelectorAll(
+        "a, button, .view-project"
+      );
+
+      window.addEventListener("mousemove", (e) => {
+        cursor.style.top = `${e.clientY}px`;
+        cursor.style.left = `${e.clientX}px`;
+      });
+
+      clickableElements.forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+          cursor.classList.add("view-mode");
+        });
+        el.addEventListener("mouseleave", () => {
+          cursor.classList.remove("view-mode");
+        });
+      });
+    </script>
+
+    <script>
+      lucide.createIcons();
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const personasCarousel = document.getElementById("personasCarousel");
+        const prevPersonaBtn = personasCarousel.querySelector(
+          ".carousel-control-prev-persona"
+        );
+        const nextPersonaBtn = personasCarousel.querySelector(
+          ".carousel-control-next-persona"
+        );
+        const personaItems =
+          personasCarousel.querySelectorAll(".carousel-item");
+
+        const myPersonasCarousel = new bootstrap.Carousel(personasCarousel, {
+          wrap: false,
+        });
+
+        function getActiveIndex() {
+          const activeItem = personasCarousel.querySelector(
+            ".carousel-item.active"
+          );
+          return [...personaItems].indexOf(activeItem);
+        }
+
+        function updatePersonaButtons() {
+          const index = getActiveIndex();
+          prevPersonaBtn.style.display = index <= 0 ? "none" : "flex";
+          nextPersonaBtn.style.display =
+            index >= personaItems.length - 1 ? "none" : "flex";
+        }
+
+        prevPersonaBtn.addEventListener("click", () => {
+          myPersonasCarousel.prev();
+        });
+
+        nextPersonaBtn.addEventListener("click", () => {
+          myPersonasCarousel.next();
+        });
+
+        personasCarousel.addEventListener(
+          "slid.bs.carousel",
+          updatePersonaButtons
+        );
+        setTimeout(updatePersonaButtons, 50);
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const track = document.getElementById("carousel-track");
+        if (!track) return;
+
+        const cards = track.querySelectorAll(".carousel-card");
+        const prevCardBtn = document.querySelector(".card-prev");
+        const nextCardBtn = document.querySelector(".card-next");
+
+        let currentIndex = 0;
+
+        function getCardWidth() {
+          const card = cards[0];
+          const style = getComputedStyle(card);
+          const marginRight = parseFloat(style.marginRight);
+          const marginLeft = parseFloat(style.marginLeft);
+
+          return card.offsetWidth + marginLeft + marginRight;
+        }
+
+        function scrollToIndex() {
+          const scrollAmount = getCardWidth() * currentIndex;
+          const maxScroll = track.scrollWidth - track.clientWidth;
+          const target = Math.min(scrollAmount, maxScroll);
+
+          track.scrollTo({
+            left: target,
+            behavior: "smooth",
+          });
+
+          updateCardButtons();
+        }
+
+        function updateCardButtons() {
+          prevCardBtn.style.display = currentIndex === 0 ? "none" : "flex";
+          nextCardBtn.style.display =
+            currentIndex >= cards.length - 1 ? "none" : "flex";
+        }
+
+        nextCardBtn.addEventListener("click", () => {
+          if (currentIndex < cards.length - 1) {
+            currentIndex++;
+            scrollToIndex();
+          }
+        });
+
+        prevCardBtn.addEventListener("click", () => {
+          if (currentIndex > 0) {
+            currentIndex--;
+            scrollToIndex();
+          }
+        });
+
+        window.addEventListener("resize", scrollToIndex);
+        scrollToIndex();
+      });
+    </script>
+    <script>
+      (() => {
+        // ---- Elements
+        const navbar = document.querySelector(".navbar");
+        const hamburger = document.querySelector(".hamburger");
+        const slideMenu = document.querySelector(".slide-down-menu");
+        const overlay = document.querySelector(".menu-overlay");
+
+        if (!navbar || !hamburger || !slideMenu || !overlay) return;
+
+        // ---- State helpers
+        const isMenuOpen = () => hamburger.classList.contains("open");
+
+        const setMenuState = (open) => {
+          hamburger.classList.toggle("open", open);
+          slideMenu.classList.toggle("show", open);
+          overlay.classList.toggle("show", open);
+          navbar.classList.toggle("menu-open", open); // keep navbar pinned when menu open
+          if (open) navbar.classList.remove("nav-hidden");
+        };
+
+        // Init
+        setMenuState(false);
+
+        // ---- Toggle menu (single source of truth)
+        hamburger.addEventListener("click", () => setMenuState(!isMenuOpen()));
+        overlay.addEventListener("click", () => setMenuState(false));
+        slideMenu
+          .querySelectorAll("a")
+          .forEach((a) =>
+            a.addEventListener("click", () => setMenuState(false))
+          );
+
+        // ---- Fade-up (unchanged)
+        const io = new IntersectionObserver(
+          (entries) =>
+            entries.forEach((e) =>
+              e.target.classList.toggle("visible", e.isIntersecting)
+            ),
+          { threshold: 0.3 }
+        );
+        document.querySelectorAll(".fade-up").forEach((el) => io.observe(el));
+
+        // ---- Hide navbar on scroll down, show on scroll up
+        let lastY = window.pageYOffset;
+        let ticking = false;
+        const THRESHOLD = 8;
+        const TOP_PIN = 40;
+
+        const onScroll = () => {
+          const y = window.pageYOffset || document.documentElement.scrollTop;
+          const delta = y - lastY;
+
+          if (Math.abs(delta) >= THRESHOLD) {
+            if (!isMenuOpen()) {
+              if (y > lastY && y > TOP_PIN) {
+                navbar.classList.add("nav-hidden"); // down
+              } else {
+                navbar.classList.remove("nav-hidden"); // up
+              }
+            } else {
+              navbar.classList.remove("nav-hidden"); // keep visible when menu open
+            }
+            lastY = Math.max(0, y);
+          }
+          ticking = false;
+        };
+
+        window.addEventListener(
+          "scroll",
+          () => {
+            if (!ticking) {
+              requestAnimationFrame(onScroll);
+              ticking = true;
+            }
+          },
+          { passive: true }
+        );
+      })();
+    </script>
+    <script>
+      const scrollSections = document.querySelectorAll(".fade-up");
+
+      const scrollObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            } else {
+              entry.target.classList.remove("visible");
+            }
+          });
+        },
+        {
+          threshold: 0.3,
+        }
+      );
+
+      scrollSections.forEach((el) => scrollObserver.observe(el));
+    </script>
+  </body>
+</html>
