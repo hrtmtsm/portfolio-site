@@ -7,10 +7,13 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug }));
 }
 
-type Props = { params: { slug: ProjectSlug } };
+// NOTE: params is a Promise in Next 15 in some cases.
+type Props = { params: Promise<{ slug: ProjectSlug }> };
 
 export default async function ProjectPage({ params }: Props) {
-  const load = registry[params.slug];     // now strongly typed
+  const { slug } = await params;            // ← await it
+
+  const load = registry[slug];
   if (!load) return notFound();
 
   const mod = await load();
@@ -24,7 +27,6 @@ export default async function ProjectPage({ params }: Props) {
       hero={item.hero}
       stats={item.stats}
       toc={item.toc}
-      backHref="/"
     >
       {item.body}
     </CaseLayout>
