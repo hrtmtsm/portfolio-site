@@ -172,9 +172,13 @@ export function Section({
 
 /* ------------- Scroll-spy (exported) ------------- */
 // Smooth, stable scroll-spy (rAF + midpoints). No intersection flicker.
+// Smooth, stable scroll-spy (rAF + midpoints). No intersection flicker.
 export function useScrollSpy(ids: string[]) {
   const [active, setActive] = useState<string | null>(null);
   const offset = 88; // header + breathing room
+
+  // Stable key (still useful) — but we’ll also list `ids` in deps.
+  const idsKey = useMemo(() => ids.join("|"), [ids]);
 
   useEffect(() => {
     if (!ids.length) return;
@@ -182,14 +186,16 @@ export function useScrollSpy(ids: string[]) {
     let raf = 0;
     let tops: number[] = [];
     let orderedIds = [...ids]; // keep a local ordered copy
-    let cleanupImgListeners: Array<() => void> = [];
+    const cleanupImgListeners: Array<() => void> = []; // const fixes prefer-const
 
     const buildTops = () => {
       const els = orderedIds
         .map((id) => document.getElementById(id))
         .filter(Boolean) as HTMLElement[];
-      tops = els.map((el) => Math.round(el.getBoundingClientRect().top + window.scrollY));
-      orderedIds = els.map((el) => el.id); // ensure we only keep found sections, in order
+      tops = els.map((el) =>
+        Math.round(el.getBoundingClientRect().top + window.scrollY)
+      );
+      orderedIds = els.map((el) => el.id); // only found sections, in order
     };
 
     const pickIndex = (y: number) => {
@@ -197,8 +203,9 @@ export function useScrollSpy(ids: string[]) {
       if (!n) return -1;
       if (n === 1) return 0;
 
-      // choose by midpoint boundaries
-      let lo = 0, hi = n - 2;
+      // midpoint boundaries
+      let lo = 0,
+        hi = n - 2;
       while (lo <= hi) {
         const mid = (lo + hi) >> 1;
         const m = (tops[mid] + tops[mid + 1]) / 2 - offset;
@@ -236,7 +243,9 @@ export function useScrollSpy(ids: string[]) {
       };
       if (!img.complete) {
         img.addEventListener("load", handler, { once: true });
-        cleanupImgListeners.push(() => img.removeEventListener("load", handler));
+        cleanupImgListeners.push(() =>
+          img.removeEventListener("load", handler)
+        );
       }
     });
 
@@ -261,10 +270,11 @@ export function useScrollSpy(ids: string[]) {
       cleanupImgListeners.forEach((fn) => fn());
       cancelAnimationFrame(raf);
     };
-  }, [ids.join("|")]);
+  }, [ids, idsKey]); // ✅ include ids so ESLint is happy
 
   return active;
 }
+
 
 /* ------------- Compact left-rail nav (exported) ------------- */
 
@@ -277,38 +287,37 @@ export function CaseSpyNav({
 }) {
   return (
     <nav aria-label="On this page" className="mt-6 ml-[-18px]">
-  <ul className="space-y-2 list-none m-0 p-0">
+      <ul className="space-y-2 list-none m-0 p-0">
         {toc.map((t) => {
           const active = activeId === t.id;
           return (
             <li key={t.id}>
-            <a
-  href={`#${t.id}`}
-  onClick={(e) => {
-    const href = e.currentTarget.getAttribute("href") || "";
-    if (!href.startsWith("#")) return;
-    e.preventDefault();
+              <a
+                href={`#${t.id}`}
+                onClick={(e) => {
+                  const href = e.currentTarget.getAttribute("href") || "";
+                  if (!href.startsWith("#")) return;
+                  e.preventDefault();
 
-    const el = document.getElementById(t.id);
-    if (!el) return;
+                  const el = document.getElementById(t.id);
+                  if (!el) return;
 
-    const top = el.getBoundingClientRect().top + window.scrollY - 80;
-    history.pushState({}, "", href);
-    window.scrollTo({ top, behavior: "smooth" });
+                  const top = el.getBoundingClientRect().top + window.scrollY - 80;
+                  history.pushState({}, "", href);
+                  window.scrollTo({ top, behavior: "smooth" });
 
-    // ⬇️ remove focus so it doesn't look “active” just because it’s focused
-    (e.currentTarget as HTMLAnchorElement).blur();
-  }}
-  aria-current={active ? "true" : undefined}
-  className={`block font-sans text-[15px] tracking-[0.02em]
-    ${active ? "text-accent-ink" : "text-muted hover:text-foreground/70"}
-    focus:outline-none focus-visible:outline-none active:outline-none
-  `}
-  style={{ paddingLeft: 0, WebkitTapHighlightColor: "transparent" }}
->
-  {t.label}
-</a>
-
+                  // ⬇️ remove focus so it doesn't look “active” just because it’s focused
+                  (e.currentTarget as HTMLAnchorElement).blur();
+                }}
+                aria-current={active ? "true" : undefined}
+                className={`block font-sans text-[15px] tracking-[0.02em]
+                  ${active ? "text-accent-ink" : "text-muted hover:text-foreground/70"}
+                  focus:outline-none focus-visible:outline-none active:outline-none
+                `}
+                style={{ paddingLeft: 0, WebkitTapHighlightColor: "transparent" }}
+              >
+                {t.label}
+              </a>
             </li>
           );
         })}
