@@ -7,10 +7,14 @@ const runbuddy: CaseDef = {
   title: "RunBuddy",
   subtitle: "OPENAI × HARDWARE • CONCEPT 2025",
   date: "PROJECT • 2025",
-  hero: <img src="/images/runbuddy-cover.png" alt="RunBuddy hero" />,
-
-  // No top stat cards — we’re moving this info into the INTRO section
-  // stats: undefined,
+  hero: (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/images/runbuddy-cover.png"
+      alt="RunBuddy hero"
+      className="block w-full h-auto rounded-xl overflow-guard"
+    />
+  ),
 
   toc: [
     { id: "overview", label: "Overview" },
@@ -28,72 +32,71 @@ const runbuddy: CaseDef = {
 
   body: (
     <div className="space-y-16">
-{/* OVERVIEW — left narrative + right meta rows (no card) */}
-<Section
-  id="overview"
-  label="PROJECT INTRO"
-  heading="More Than Miles: Run with people who match your vibe"
->
-  <div className="grid lg:grid-cols-2 gap-10">
-    {/* Left: narrative */}
-    <div>
-      <p>
-        Many runners <strong>struggle to find compatible running buddies or groups.</strong>{" "}
-        RunBuddy is a community-based app that helps people connect with others who match their
-        pace, schedule, and running style. It <strong>focuses on compatibility and connection</strong>,
-        making it easier to build consistent, supportive routines through shared runs.
-      </p>
-      <p className="mt-4">
-        I contributed by shaping interview questions,
-        consolidating research insights, leading design decisions on usability and logistics, and
-        building key prototypes following Apple’s Human Interface Guidelines.
-      </p>
-    </div>
+      {/* OVERVIEW — left narrative + right meta rows */}
+      <Section
+        id="overview"
+        label="PROJECT INTRO"
+        heading="More Than Miles: Run with people who match your vibe"
+      >
+        <div className="grid lg:grid-cols-2 gap-10">
+          {/* Left: narrative */}
+          <div className="min-w-0">
+            <p>
+              Many runners <strong>struggle to find compatible running buddies or groups.</strong>{" "}
+              RunBuddy is a community-based app that helps people connect with others who match their
+              pace, schedule, and running style. It <strong>focuses on compatibility and connection</strong>,
+              making it easier to build consistent, supportive routines through shared runs.
+            </p>
+            <p className="mt-4">
+              I contributed by shaping interview questions, consolidating research insights, leading
+              design decisions on usability and logistics, and building key prototypes following Apple’s
+              Human Interface Guidelines.
+            </p>
+          </div>
 
-    {/* Right: facts in rows with dividers */}
-    <div className="lg:pl-6">
-      <div className="border-t border-border/70 divide-y divide-border/70">
-        <div className="grid grid-cols-[120px_minmax(0,1fr)] gap-x-6 py-4">
-          <div className="text-[11px] tracking-[0.16em] text-foreground/60 uppercase">Role</div>
-          <div className="text-[15px] leading-7">UX Research, UX/UI Design</div>
-        </div>
-        <div className="grid grid-cols-[120px_minmax(0,1fr)] gap-x-6 py-4">
-          <div className="text-[11px] tracking-[0.16em] text-foreground/60 uppercase">Timeline</div>
-          <div className="text-[15px] leading-7">8 weeks (Spring 2025)</div>
-        </div>
-        <div className="grid grid-cols-[120px_minmax(0,1fr)] gap-x-6 py-4">
-          <div className="text-[11px] tracking-[0.16em] text-foreground/60 uppercase">Type</div>
-          <div className="text-[15px] leading-7">Academic project</div>
-        </div>
-        <div className="grid grid-cols-[120px_minmax(0,1fr)] gap-x-6 py-4">
-          <div className="text-[11px] tracking-[0.16em] text-foreground/60 uppercase">With</div>
-          <div className="text-[15px] leading-7">
-            D. Untivero, J. Gallarate, J. Lin, M. Manzanarez
+          {/* Right: facts in rows with dividers */}
+          <div className="lg:pl-6">
+            <div className="border-t border-border/70 divide-y divide-border/70">
+              <div className="grid grid-cols-[120px_minmax(0,1fr)] gap-x-6 py-4">
+                <div className="font-hairline text-[11px] tracking-[0.16em] text-foreground/60 uppercase">Role</div>
+                <div className="text-[15px] leading-7">UX Research, UX/UI Design</div>
+              </div>
+              <div className="grid grid-cols-[120px_minmax(0,1fr)] gap-x-6 py-4">
+                <div className="font-hairline text-[11px] tracking-[0.16em] text-foreground/60 uppercase">Timeline</div>
+                <div className="text-[15px] leading-7">8 weeks (Spring 2025)</div>
+              </div>
+              <div className="grid grid-cols-[120px_minmax(0,1fr)] gap-x-6 py-4">
+                <div className="font-hairline text-[11px] tracking-[0.16em] text-foreground/60 uppercase">Type</div>
+                <div className="text-[15px] leading-7">Academic project</div>
+              </div>
+              <div className="grid grid-cols-[120px_minmax(0,1fr)] gap-x-6 py-4">
+                <div className="font-hairline text-[11px] tracking-[0.16em] text-foreground/60 uppercase">With</div>
+                <div className="text-[15px] leading-7">
+                  D. Untivero, J. Gallarate, J. Lin, M. Manzanarez
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
 
-  {/* Optional: impact highlights under the intro */}
-  <div className="mt-8 grid md:grid-cols-2 gap-4">
-    <div className="rounded-xl border border-border/70 bg-white p-5">
-      <div className="text-2xl leading-none mb-2">🟧</div>
-      <h4 className="font-semibold">Clearer compatibility boosts confidence</h4>
-      <p className="text-foreground/80 mt-1">
-        Transparent pace, vibe, and expectations helped hesitant runners feel comfortable joining groups.
-      </p>
-    </div>
-    <div className="rounded-xl border border-border/70 bg-white p-5">
-      <div className="text-2xl leading-none mb-2">⚡️</div>
-      <h4 className="font-semibold">Streamlined onboarding reduces friction</h4>
-      <p className="text-foreground/80 mt-1">
-        Cutting non-essential questions made the flow feel faster without sacrificing match quality.
-      </p>
-    </div>
-  </div>
-</Section>
-
+        {/* Impact highlights */}
+        <div className="mt-8 grid md:grid-cols-2 gap-4">
+          <div className="rounded-xl border border-border/70 bg-white p-5">
+            <div className="text-2xl leading-none mb-2">🟧</div>
+            <h4 className="font-hairline font-semibold">Clearer compatibility boosts confidence</h4>
+            <p className="text-foreground/80 mt-1">
+              Transparent pace, vibe, and expectations helped hesitant runners feel comfortable joining groups.
+            </p>
+          </div>
+          <div className="rounded-xl border border-border/70 bg-white p-5">
+            <div className="text-2xl leading-none mb-2">⚡️</div>
+            <h4 className="font-hairline font-semibold">Streamlined onboarding reduces friction</h4>
+            <p className="text-foreground/80 mt-1">
+              Cutting non-essential questions made the flow feel faster without sacrificing match quality.
+            </p>
+          </div>
+        </div>
+      </Section>
 
       {/* PROBLEM */}
       <Section
@@ -124,9 +127,9 @@ const runbuddy: CaseDef = {
         </p>
 
         {/* Feature blocks */}
-        <div className="grid lg:grid-cols-2 gap-6 mt-6">
-          <div>
-            <h4 className="font-semibold mb-2">Feature 1 — Onboarding Questionnaire</h4>
+        <div className="grid lg:grid-cols-2 gap-6 mt-6 overflow-guard">
+          <div className="min-w-0">
+            <h4 className="font-hairline font-semibold mb-2">Feature 1 — Onboarding Questionnaire</h4>
             <p className="text-foreground/80">
               New users answer a few questions about their pace, preferences, and goals to help match
               them with compatible groups.
@@ -139,12 +142,12 @@ const runbuddy: CaseDef = {
               loop
               muted
               playsInline
-              className="w-full h-auto"
+              className="w-full h-auto block"
             />
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-6 mt-6">
+        <div className="grid lg:grid-cols-2 gap-6 mt-6 overflow-guard">
           <div className="rounded-lg overflow-hidden bg-white shadow order-2 lg:order-1">
             <video
               src="/videos/runbuddy-feature-02.mp4"
@@ -152,11 +155,11 @@ const runbuddy: CaseDef = {
               loop
               muted
               playsInline
-              className="w-full h-auto"
+              className="w-full h-auto block"
             />
           </div>
-          <div className="order-1 lg:order-2">
-            <h4 className="font-semibold mb-2">Feature 2 — Group Exploration</h4>
+          <div className="order-1 lg:order-2 min-w-0">
+            <h4 className="font-hairline font-semibold mb-2">Feature 2 — Group Exploration</h4>
             <p className="text-foreground/80">
               Browse local running groups with tags like “beginner-friendly,” “social,” or “goal-focused”
               to quickly find one that fits your style.
@@ -164,9 +167,9 @@ const runbuddy: CaseDef = {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-6 mt-6">
-          <div>
-            <h4 className="font-semibold mb-2">Feature 3 — Drop a Review</h4>
+        <div className="grid lg:grid-cols-2 gap-6 mt-6 overflow-guard">
+          <div className="min-w-0">
+            <h4 className="font-hairline font-semibold mb-2">Feature 3 — Drop a Review</h4>
             <p className="text-foreground/80">
               Leave quick feedback after a run using emojis, tags, and optional comments. This keeps it
               easy and helps others gauge group compatibility.
@@ -179,7 +182,7 @@ const runbuddy: CaseDef = {
               loop
               muted
               playsInline
-              className="w-full h-auto"
+              className="w-full h-auto block"
             />
           </div>
         </div>
@@ -217,9 +220,9 @@ const runbuddy: CaseDef = {
         </div>
 
         {/* Competitive table */}
-        <div className="overflow-x-auto mt-6">
+        <div className="overflow-x-auto mt-6 overflow-guard">
           <table className="min-w-[640px] w-full border-collapse">
-            <thead>
+            <thead className="font-hairline">
               <tr className="text-left border-b">
                 <th className="py-2 pr-4">Feature</th>
                 <th className="py-2 pr-4">Nike Run Club</th>

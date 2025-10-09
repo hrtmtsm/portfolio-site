@@ -1,18 +1,19 @@
 @import "tailwindcss";
 
-/* Lele-style palette (soft cool gray, charcoal ink, lilac accent, optional black panels) */
-:root{
-  --background: #F6F7F9;   /* page canvas (very light cool gray) */
+/* ===== Palette (refined darker) ===== */
+:root {
+  --background: #F6F7F9;   /* main page */
   --surface:    #FFFFFF;   /* cards */
-  --surface-2:  #0E0F12;   /* optional dark/black panels */
-  --foreground: #2B3742;   /* primary ink (blue-charcoal) */
-  --muted:      #8C97A3;   /* secondary text */
-  --border:     #E6E9EE;   /* hairlines */
-  --accent:     #A9A3FF;   /* lilac accent (use sparingly) */
-  --accent-ink: #4338CA;   /* deeper accent ink if needed */
+  --surface-rail: #F3F4F6; /* new: subtle sidebar background */
+  --surface-2:  #0E0F12;
+  --foreground: #1F2730;
+  --muted:      #8A94A3;   /* slightly softer than before */
+  --border:     #DCE1E7;
+  --accent:     #24273F;
+  --accent-ink: #24273F;
 }
 
-/* map to tailwind tokens */
+/* ===== Tailwind theme tokens ===== */
 @theme inline {
   --color-background: var(--background);
   --color-surface:    var(--surface);
@@ -23,32 +24,124 @@
   --color-accent:     var(--accent);
   --color-accent-ink: var(--accent-ink);
 
-  --font-sans:    var(--font-geist-sans);
-  --font-mono:    var(--font-geist-mono);
-  --font-display: var(--font-display);
+  --font-sans:    var(--font-geist-sans);   /* Geist Sans */
+  --font-mono:    var(--font-geist-mono);   /* Geist Mono */
+  --font-display: var(--font-display);      /* Inter (display) */
 }
 
-/* your shared container (keep what you liked) */
+/* ===== Base ===== */
+:root { color-scheme: light; }
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family:
+    var(--font-sans),
+    system-ui, -apple-system, "Segoe UI", Roboto,
+    "Hiragino Sans", "Noto Sans JP", "Yu Gothic",
+    Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ===== Font utilities ===== */
+
+/* Inter for hero/display */
+.font-display {
+  font-family:
+    var(--font-display),
+    var(--font-sans),
+    system-ui, -apple-system, "Segoe UI", Roboto,
+    "Hiragino Sans", "Noto Sans JP", "Yu Gothic",
+    Arial, sans-serif;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  font-feature-settings: "ss01" on;
+}
+
+/* Geist Mono for hairline/meta */
+.font-hairline {
+  font-family: var(--font-mono), var(--font-sans), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.875rem;     /* ~14px */
+  letter-spacing: 0.02em;  /* subtle tracking for small mono */
+  color: var(--muted);
+  text-transform: none;    /* change to uppercase if you prefer */
+  font-weight: 400;
+}
+
+/* ===== Geist Mono (hairline/meta) — force the actual mono face ===== */
+.font-hairline,
+.mono {
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  font-synthesis-weight: none;
+  font-synthesis-style: none;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 0.875rem; /* tweak per context if needed */
+}
+
+/* ===== Container helper ===== */
 .container-edge {
   @apply w-full mx-auto max-w-[clamp(1280px,97vw,1760px)] px-3 sm:px-4 lg:px-6;
 }
 
-/* Base styles */
-:root { color-scheme: light; }
-body{
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+/* ===== Cards ===== */
+.card { @apply bg-surface border border-border rounded-2xl; }
+.card-dark {
+  background: var(--surface-2);
+  color: #fff;
+  border-color: color-mix(in oklab, white 10%, transparent);
 }
 
-/* Selection matches accent family */
-::selection{ background: color-mix(in oklab, var(--accent) 22%, transparent); }
-
-/* Card helpers */
-.card       { @apply bg-surface border border-border rounded-2xl; }
-.card-dark  { background: var(--surface-2); color: white; border-color: color-mix(in oklab, white 10%, transparent); }
-
-
+/* ===== Nav animation ===== */
 .site-nav { transition: transform 200ms ease; }
 html[data-hide-nav="1"] .site-nav { transform: translateY(-100%); }
+
+/* ===== Global Inline Highlight System ===== */
+
+/* User drag-selection */
+::selection { background: var(--accent); color: #fff; }
+
+/* Inline emphasis pills only */
+mark, .highlight {
+  background: var(--accent);
+  color: #fff;
+  padding: 0.05em 0.25em;
+  border-radius: 0.15em;
+  font-weight: 500;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Safety: never let block nodes carry the highlight background */
+.highlight:where(h1,h2,h3,h4,h5,h6,div,section,article) {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* ===== Links (no underline on hover) ===== */
+a {
+  color: var(--accent-ink);
+  text-decoration: none;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+a:hover, a:focus {
+  color: var(--accent-ink);
+  opacity: 0.75;
+  background: transparent;
+}
+
+/* ===== Utilities ===== */
+.text-muted { color: var(--muted); }
+
+/* hard kill horizontal scrolling (more robust than hidden) */
+html, body {
+  max-width: 100%;
+  overflow-x: clip; /* clips without triggering a scroll container */
+}
 
