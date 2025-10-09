@@ -1,21 +1,13 @@
-// app/page.tsx (or wherever your Home component lives)
+// app/page.tsx
 import Link from "next/link";
 import Image from "next/image";
-import { Fragment } from "react";
-
-const workHistory = [
-  { year: "2025", company: "Bloomberg", role: "Software Engineering Intern" },
-  { year: "2025", company: "1Password", role: "Product Design Intern" },
-  { year: "2024", company: "Royal Bank of Canada", role: "Software Engineering Intern" },
-  { year: "2023", company: "Onova", role: "Product Design + Engineering Intern" },
-];
 
 const projects = [
   {
     title: "RunBuddy",
-    subtitle: "OPENAI X HARDWARE • CONCEPT 2025",
+    subtitle: "ACADEMIC • CONCEPT 2025",
     description:
-      "Exploring how large language models can interact with physical computing and embedded interfaces.",
+      "Helping runners find their people by surfacing compatibility, because long-term motivation comes from connection.",
     href: "/projects/runbuddy",
     media: {
       type: "video",
@@ -25,52 +17,72 @@ const projects = [
   },
   {
     title: "ClassCollab",
-    subtitle: "POKERGPT • SHIPPED 2023",
+    subtitle: "ACADEMIC • CONCEPT 2025",
     description:
-      "Teaching GTO and exploitative strategies through conversational coaching powered by AI.",
+      "Solving the problem of team mismatch in academic group projects through research-backed design, behavior-driven validation, and iterative prototyping.",
     href: "/projects/classcollab",
     media: { type: "image", src: "/images/classcollab-cover.png" },
   },
   {
-    title: "Iowa Cubs Website Redesign",            // ← rename to match slug
-    subtitle: "WEB • 2023",
+    title: "Iowa Cubs Website Redesign",
+    subtitle: "ACADEMIC • CONCEPT",
     description:
-      "A modernized site structure and component system for tickets, schedule, and promos.",
-    href: "/projects/iowa",                         // ← slug exists in your registry
+      "Enhanced the fan experience through heuristic evaluations and real-user testing to uncover and solve key usability issues.",
+    href: "/projects/iowa",
     media: { type: "image", src: "/images/iowa-cover.png" },
   },
 ];
 
 export default function Home() {
   return (
-    <div className="space-y-16 lg:space-y-20">
+    <div className="space-y-14 lg:space-y-18">
       {/* HERO */}
-      <section className="relative pt-16 sm:pt-20 lg:pt-28 grid grid-cols-1 lg:grid-cols-[48%_52%] gap-10 lg:gap-12 items-start">
-        <div className="flex flex-col justify-between min-h-[300px] lg:min-h-[360px]">
-          <h1 className="font-[var(--font-display)] text-[46px] lg:text-[48px] leading-none tracking-tight text-foreground">
-            I&apos;m Haruto, a product designer who{" "}
-            <i className="italic font-[var(--font-display)] text-foreground/90">engineers.</i>
-          </h1>
-          <p className="mt-4 text-[15px] text-muted leading-relaxed">
-            I design bilingual experiences bridging Japan and the U.S.
+      <section className="relative pt-12 sm:pt-16 lg:pt-20">
+        <div className="max-w-[42rem] lg:max-w-[60%]">
+       <h1 className="font-sans text-[30px] sm:text-[32px] lg:text-[34px] leading-[1.35] tracking-tight text-foreground">
+  Haruto is a human-centered designer who brings clarity to complex
+  systems through empathy and structure, with a background in
+  Human-Computer Interaction from DePaul.
+</h1>
+
+          {/* CURRENT ROLE */}
+          <p className="mt-8 text-[16px] sm:text-[17px] text-muted leading-snug">
+            Currently a Product Design Intern at{" "}
+            <a
+              href="https://moneyforward.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block text-foreground opacity-75 hover:opacity-100 underline decoration-dotted underline-offset-[3px] decoration-[0.75px] transition-opacity"
+            >
+              MoneyForward
+            </a>
+            .
+          </p>
+
+          {/* PREVIOUS ROLE */}
+          <p className="mt-2 text-[16px] sm:text-[17px] text-muted leading-snug">
+            Previously UX Research & Design Intern at{" "}
+            <a
+              href="https://www.markteqdigital.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block text-foreground opacity-75 hover:opacity-100 underline decoration-dotted underline-offset-[3px] decoration-[0.75px] transition-opacity"
+            >
+              Markteq Digital
+            </a>
+            .
           </p>
         </div>
-
-        <aside className="self-stretch grid grid-cols-[56px_1fr_1fr] gap-x-6 gap-y-[12px] content-start">
-          {workHistory.map((item) => (
-            <Fragment key={`${item.year}-${item.company}`}>
-              <div className="text-muted text-[13px]">{item.year}</div>
-              <div className="text-[15px] font-semibold text-foreground">{item.company}</div>
-              <div className="text-[15px] text-muted">{item.role}</div>
-            </Fragment>
-          ))}
-        </aside>
       </section>
 
       {/* PROJECT GRID */}
-      <section className="mt-20 grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-24">
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-24">
         {projects.map((project) => (
-          <Link key={project.title} href={project.href} className="group block space-y-4">
+          <Link
+            key={project.title}
+            href={project.href}
+            className="group block space-y-4"
+          >
             <div className="relative aspect-[4/3] overflow-hidden">
               {project.media.type === "video" ? (
                 <video
@@ -95,11 +107,13 @@ export default function Home() {
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-sm">
                 <p className="text-foreground font-medium">{project.title}</p>
-                <p className="text-muted uppercase tracking-wider text-[12px]">
+                <p className="font-hairline uppercase tracking-wider text-[12px]">
                   {project.subtitle}
                 </p>
               </div>
-              <p className="text-[14px] text-muted leading-relaxed">{project.description}</p>
+              <p className="text-[14px] text-muted leading-relaxed">
+                {project.description}
+              </p>
             </div>
           </Link>
         ))}

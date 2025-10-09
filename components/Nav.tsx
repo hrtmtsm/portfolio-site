@@ -14,61 +14,54 @@ export default function Nav() {
     { href: "/Haruto_Matsushima_Resume.pdf", label: "RESUME", external: true },
   ];
 
-  // Only mark WORK active on the home page ("/")
-  // If you want WORK active on project pages too, change to:
-  // const isActive = (href: string) =>
-  //   href === "/" ? pathname === "/" || pathname.startsWith("/projects") : pathname.startsWith(href);
   const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+    href === "/"
+      ? pathname === "/" || pathname.startsWith("/projects")
+      : pathname.startsWith(href);
 
   return (
-    <header className="site-nav sticky top-0 z-50 bg-transparent transition-transform">
-      <div className="container-edge h-14 flex items-center justify-between">
-        {/* Left: Name + Tagline */}
-        <div className="flex items-center gap-6">
-          <Link
-            href="/"
-            className="tracking-[0.22em] text-[11px] font-semibold text-foreground/80"
-          >
-            HARUTO
-          </Link>
-          <span className="hidden sm:inline text-[11px] tracking-[0.18em] text-foreground/50">
-            PRODUCT DESIGNER + ENGINEER
-          </span>
-
-          {/* Primary nav */}
-          <nav
-            aria-label="Primary"
-            className="flex items-center gap-7 text-xs tracking-wide ml-8"
-          >
-            {links.map((l) =>
-              l.external ? (
+    <header
+      className="site-nav bg-transparent z-50 transition-transform"
+      style={{
+        position: "static",   // ⬅️ forces non-sticky even if CSS says sticky
+        top: "auto",
+        transform: "none",    // ⬅️ neutralize any hide-on-scroll transform
+      }}
+    >
+      <div className="container-edge h-14 flex items-center justify-start">
+        <nav
+          aria-label="Primary"
+          className="flex items-center gap-8 text-[13px] tracking-wide font-hairline"
+        >
+          {links.map((l) =>
+            l.external ? (
                 <a
-                  key={l.href}
-                  href={l.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-foreground/60 hover:text-foreground transition-colors"
-                >
-                  {l.label}
-                </a>
-              ) : (
+                key={l.href}
+                href={l.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted hover:text-foreground transition-colors"
+              >
+                {l.label}
+              </a>
+              
+            ) : (
                 <Link
-                  key={l.href}
-                  href={l.href}
-                  aria-current={isActive(l.href) ? "page" : undefined}
-                  className={
-                    isActive(l.href)
-                      ? "text-accent font-medium"
-                      : "text-foreground/60 hover:text-foreground transition-colors"
-                  }
-                >
-                  {l.label}
-                </Link>
-              )
-            )}
-          </nav>
-        </div>
+                key={l.href}
+                href={l.href}
+                aria-current={isActive(l.href) ? "page" : undefined}
+                className={
+                  isActive(l.href)
+                    ? "text-accent-ink font-medium"
+                    : "text-muted hover:text-foreground transition-colors"
+                }
+              >
+                {l.label}
+              </Link>
+              
+            )
+          )}
+        </nav>
       </div>
     </header>
   );

@@ -1,14 +1,323 @@
-'use client';
+// components/case/CaseStudyLayout.tsx
+"use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 
 /** spacing knobs */
 const GAP_BELOW_NAV = 14;     // rail/content gap under the nav at very top
 const PINNED_TOP_GAP = 20;    // rail gap from viewport top when pinned
-const BACK_ICON_OUTDENT = 18; // how far the arrow sits to the LEFT of the text start (px)
+const BACK_ICON_OUTDENT = 18; // how far the arrow sits LEFT of the text start (px)
 
-type TocItem = { id: string; label: string };
+/** Exported so other files can share the type */
+export type TocItem = { id: string; label: string };
+
+/* ---------------- Icons ---------------- */
+function ArrowLeft({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 20 20" fill="none" className={className} aria-hidden="true">
+      <path
+        d="M12.5 4.5 7 10l5.5 5.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/* ------------- Small building blocks (exported) ------------- */
+
+export function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-lg bg-surface p-4 border border-border/70">
+      <div className="font-hairline text-[11px] tracking-[0.16em] text-foreground/60 uppercase">
+        {label}
+      </div>
+      <div className="mt-1 text-[20px] leading-none">{value}</div>
+    </div>
+  );
+}
+
+export function Figure({
+  src,
+  alt,
+  caption,
+  aspect = "auto",
+}: {
+  src: string;
+  alt: string;
+  caption?: string;
+  aspect?: "auto" | "16/9" | "4/3" | "1/1";
+}) {
+  return (
+    <figure className="my-6 overflow-guard">
+      <div
+        className={`rounded-lg overflow-hidden bg-white shadow-[0_1px_2px_rgba(0,0,0,.06)] ${
+          aspect !== "auto" ? "aspect-" + aspect.replace("/", "\\/") : ""
+        }`}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src} alt={alt} className="w-full h-auto block" />
+      </div>
+      {caption && (
+        <figcaption className="mt-2 font-hairline text-[12px] tracking-[0.02em] text-foreground/60">
+          {caption}
+        </figcaption>
+      )}
+    </figure>
+  );
+}
+
+/** Overview block: left rich intro, right facts table, optional impact cards below. */
+export function Overview({
+  intro,
+  facts,
+  impacts,
+}: {
+  intro: ReactNode;
+  facts: Array<{ label: string; value: ReactNode }>;
+  impacts?: Array<{ icon?: string; title: string; body?: string }>;
+}) {
+  return (
+    <div className="space-y-10">
+      <div className="grid lg:grid-cols-[minmax(0,1fr)_380px] gap-8 lg:gap-12">
+        {/* left: narrative intro */}
+        <div className="text-[16px] leading-8 min-w-0">{intro}</div>
+
+        {/* right: key facts table */}
+        <dl className="h-fit rounded-xl border border-border/70 bg-surface divide-y divide-border/60">
+          {facts.map((f, i) => (
+            <div key={i} className="grid grid-cols-[120px_1fr] gap-4 p-4">
+              <dt className="font-hairline text-[12px] tracking-[0.18em] text-foreground/60 uppercase">
+                {f.label}
+              </dt>
+              <dd className="text-[15px]">{f.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+
+      {impacts?.length ? (
+        <div className="grid sm:grid-cols-2 gap-6">
+          {impacts.map((c, i) => (
+            <div
+              key={i}
+              className="rounded-xl border border-border/70 bg-surface p-5"
+            >
+              <div className="flex items-center gap-2 text-[15px] font-medium">
+                {c.icon && <span className="text-xl" aria-hidden>{c.icon}</span>}
+                {c.title}
+              </div>
+              {c.body && (
+                <p className="mt-2 text-[14px] text-foreground/70">{c.body}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+/* ---------------- Section (exported) ---------------- */
+
+export function Section({
+  id,
+  heading,
+  label,
+  children,
+  headingClassName,
+}: {
+  id: string;
+  heading: string;
+  label?: string;
+  children?: ReactNode;
+  headingClassName?: string;
+}) {
+  return (
+    <section id={id} className="mt-28 pt-8 border-t border-border/70 scroll-mt-[120px]">
+      {label && (
+        <div className="mb-3">
+          <span className="inline-block font-hairline text-[12px] tracking-[0.18em] text-accent">
+            {label}
+          </span>
+        </div>
+      )}
+
+      <h2
+        className={
+          headingClassName ??
+          "font-sans font-semibold text-[22px] sm:text-[26px] lg:text-[30px] leading-snug text-foreground"
+        }
+      >
+        {heading}
+      </h2>
+
+      {children && (
+        <div className="mt-4 space-y-5 text-[15px] leading-7 text-foreground/85">
+          {children}
+        </div>
+      )}
+    </section>
+  );
+}
+
+/* ------------- Scroll-spy (exported) ------------- */
+// Smooth, stable scroll-spy (rAF + midpoints). No intersection flicker.
+export function useScrollSpy(ids: string[]) {
+  const [active, setActive] = useState<string | null>(null);
+  const offset = 88; // header + breathing room
+
+  useEffect(() => {
+    if (!ids.length) return;
+
+    let raf = 0;
+    let tops: number[] = [];
+    let orderedIds = [...ids]; // keep a local ordered copy
+    let cleanupImgListeners: Array<() => void> = [];
+
+    const buildTops = () => {
+      const els = orderedIds
+        .map((id) => document.getElementById(id))
+        .filter(Boolean) as HTMLElement[];
+      tops = els.map((el) => Math.round(el.getBoundingClientRect().top + window.scrollY));
+      orderedIds = els.map((el) => el.id); // ensure we only keep found sections, in order
+    };
+
+    const pickIndex = (y: number) => {
+      const n = tops.length;
+      if (!n) return -1;
+      if (n === 1) return 0;
+
+      // choose by midpoint boundaries
+      let lo = 0, hi = n - 2;
+      while (lo <= hi) {
+        const mid = (lo + hi) >> 1;
+        const m = (tops[mid] + tops[mid + 1]) / 2 - offset;
+        if (y >= m) lo = mid + 1;
+        else hi = mid - 1;
+      }
+      return Math.max(0, Math.min(n - 1, lo));
+    };
+
+    const measure = () => {
+      const y = window.scrollY + offset;
+      const idx = pickIndex(y);
+      const next = idx >= 0 ? orderedIds[idx] ?? null : null;
+      setActive((prev) => (prev === next ? prev : next));
+    };
+
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(measure);
+    };
+
+    const onResize = () => {
+      buildTops();
+      measure();
+    };
+
+    buildTops();
+    measure();
+
+    // Recompute when images load (layout shifts)
+    document.querySelectorAll("img").forEach((img) => {
+      const handler = () => {
+        buildTops();
+        measure();
+      };
+      if (!img.complete) {
+        img.addEventListener("load", handler, { once: true });
+        cleanupImgListeners.push(() => img.removeEventListener("load", handler));
+      }
+    });
+
+    const mo = new MutationObserver(() => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        buildTops();
+        measure();
+      });
+    });
+    mo.observe(document.body, { childList: true, subtree: true });
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize, { passive: true });
+    window.addEventListener("orientationchange", onResize, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("orientationchange", onResize);
+      mo.disconnect();
+      cleanupImgListeners.forEach((fn) => fn());
+      cancelAnimationFrame(raf);
+    };
+  }, [ids.join("|")]);
+
+  return active;
+}
+
+/* ------------- Compact left-rail nav (exported) ------------- */
+
+export function CaseSpyNav({
+  toc,
+  activeId,
+}: {
+  toc: TocItem[];
+  activeId: string | null;
+}) {
+  return (
+    <nav aria-label="On this page" className="mt-6 ml-[-18px]">
+  <ul className="space-y-2 list-none m-0 p-0">
+        {toc.map((t) => {
+          const active = activeId === t.id;
+          return (
+            <li key={t.id}>
+            <a
+  href={`#${t.id}`}
+  onClick={(e) => {
+    const href = e.currentTarget.getAttribute("href") || "";
+    if (!href.startsWith("#")) return;
+    e.preventDefault();
+
+    const el = document.getElementById(t.id);
+    if (!el) return;
+
+    const top = el.getBoundingClientRect().top + window.scrollY - 80;
+    history.pushState({}, "", href);
+    window.scrollTo({ top, behavior: "smooth" });
+
+    // ⬇️ remove focus so it doesn't look “active” just because it’s focused
+    (e.currentTarget as HTMLAnchorElement).blur();
+  }}
+  aria-current={active ? "true" : undefined}
+  className={`block font-sans text-[15px] tracking-[0.02em]
+    ${active ? "text-accent-ink" : "text-muted hover:text-foreground/70"}
+    focus:outline-none focus-visible:outline-none active:outline-none
+  `}
+  style={{ paddingLeft: 0, WebkitTapHighlightColor: "transparent" }}
+>
+  {t.label}
+</a>
+
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  );
+}
+
+/* ---------------- Main page layout (exported) ---------------- */
 
 type CaseLayoutProps = {
   title: string;
@@ -17,8 +326,7 @@ type CaseLayoutProps = {
   hero?: ReactNode;
   stats?: Array<{ label: string; value: string }>;
   toc?: TocItem[];
-  children: ReactNode;
-  /** Where BACK should take users. Defaults to the landing page. */
+  children?: ReactNode;  // optional
   backHref?: string;
 };
 
@@ -30,7 +338,7 @@ export function CaseLayout({
   stats,
   toc: tocProp,
   children,
-  backHref = "/", // always go “home” by default
+  backHref = "/",
 }: CaseLayoutProps) {
   const router = useRouter();
   const tocItems = useMemo(() => tocProp ?? [], [tocProp]);
@@ -40,7 +348,8 @@ export function CaseLayout({
   useEffect(() => {
     const el = document.querySelector<HTMLElement>(".site-nav");
     if (!el) return;
-    const update = () => setNavHeight(Math.round(el.getBoundingClientRect().height));
+    const update = () =>
+      setNavHeight(Math.round(el.getBoundingClientRect().height));
     update();
     const ro = new ResizeObserver(update);
     ro.observe(el);
@@ -79,9 +388,11 @@ export function CaseLayout({
     };
   }, []);
 
-  // scroll-spy aligned to the rail top
+  // scroll-spy aligned to the rail top (uses IntersectionObserver for header rail state)
   useEffect(() => {
-    const targets = Array.from(document.querySelectorAll<HTMLElement>("section[id]"));
+    const targets = Array.from(
+      document.querySelectorAll<HTMLElement>("section[id]")
+    );
     if (!targets.length) return;
     const io = new IntersectionObserver(
       (entries) => {
@@ -99,19 +410,19 @@ export function CaseLayout({
   const goHome = () => router.push(backHref || "/");
 
   return (
-    <main className="container-edge px-5 sm:px-8">
+    <main className="container-edge px-5 sm:px-8 overflow-guard">
       {/* sits directly under the nav */}
       <div ref={topSentinelRef} aria-hidden="true" className="h-px w-px" />
 
       <div className="grid lg:grid-cols-[220px_minmax(0,1fr)] gap-8 lg:gap-12">
         {/* LEFT rail */}
-        <aside className="hidden lg:block">
+        <aside className="hidden lg:block min-w-0">
           <div className="sticky" style={{ top: railOffset }}>
-            {/* Back text aligns to container edge; arrow is outdented to the left */}
+            {/* Back — Geist Sans */}
             <button
               type="button"
               onClick={goHome}
-              className="relative inline-flex items-center text-[13px] tracking-[0.08em] text-foreground/70 hover:text-foreground transition-colors"
+              className="relative inline-flex items-center font-sans text-[13px] tracking-[0.02em] text-foreground/70 hover:text-foreground transition-colors"
               aria-label="Go back"
               style={{ paddingLeft: 0 }}
             >
@@ -127,56 +438,28 @@ export function CaseLayout({
 
             {tocItems.length > 0 && (
               <nav aria-label="On this page" className="mt-6">
-                <ul className="space-y-2 pl-0">
-                  {tocItems.map((t) => {
-                    const active = activeId === t.id;
-                    return (
-                      <li key={t.id}>
-                        <a
-                          href={`#${t.id}`}
-                          onClick={(e) => {
-                            const href = e.currentTarget.getAttribute("href") || "";
-                            if (!href.startsWith("#")) return;
-                            e.preventDefault();
-                            const el = document.getElementById(href.slice(1));
-                            if (!el) return;
-                            const top =
-                              el.getBoundingClientRect().top +
-                              window.scrollY -
-                              (railOffset + 8);
-                            history.pushState({}, "", href);
-                            window.scrollTo({ top, behavior: "smooth" });
-                          }}
-                          aria-current={active ? "true" : undefined}
-                          className={`block text-[13px] tracking-[0.18em] ${
-                            active
-                              ? "text-foreground"
-                              : "text-foreground/55 hover:text-foreground"
-                          }`}
-                          style={{ letterSpacing: "0.18em", paddingLeft: 0 }}
-                        >
-                          {t.label}
-                        </a>
-                      </li>
-                    );
-                  })}
-                </ul>
+                <CaseSpyNav toc={tocItems} activeId={activeId} />
               </nav>
             )}
           </div>
         </aside>
 
         {/* RIGHT content */}
-        <div style={{ paddingTop: contentTopPad }}>
+        <div style={{ paddingTop: contentTopPad }} className="min-w-0">
           <header className="max-w-[760px] xl:max-w-[820px] 2xl:max-w-[880px]">
             {date && (
-              <p className="text-[12px] tracking-[0.18em] text-foreground/55">{date}</p>
+              <p className="font-hairline text-[12px] tracking-[0.18em] text-foreground/55">
+                {date}
+              </p>
             )}
-            <h1 className="mt-2 text-[34px] leading-[1.15] sm:text-[40px] lg:text-[48px] font-medium">
+            {/* H1 in Geist Sans */}
+            <h1 className="mt-2 font-sans text-[34px] leading-[1.15] sm:text-[40px] lg:text-[48px] font-medium">
               {title}
             </h1>
             {subtitle && (
-              <p className="mt-3 text-[15px] sm:text-[16px] text-foreground/70">{subtitle}</p>
+              <p className="mt-3 text-[15px] sm:text-[16px] text-foreground/70">
+                {subtitle}
+              </p>
             )}
             {hero && (
               <div className="mt-8 rounded-xl overflow-hidden bg-white shadow-[0_1px_2px_rgba(0,0,0,.06)]">
@@ -206,7 +489,7 @@ export function CaseLayout({
         <button
           type="button"
           onClick={goHome}
-          className="inline-flex items-center gap-2 text-[13px] tracking-[0.08em] text-foreground/70 hover:text-foreground transition-colors"
+          className="inline-flex items-center gap-2 font-sans text-[13px] tracking-[0.02em] text-foreground/70 hover:text-foreground transition-colors"
           aria-label="Go back"
         >
           <ArrowLeft className="h-4 w-4" />
@@ -214,151 +497,5 @@ export function CaseLayout({
         </button>
       </div>
     </main>
-  );
-}
-
-/* ---------- Section + helpers ---------- */
-
-export function Section({
-  id,
-  heading,
-  label, // small eyebrow label under the divider
-  children,
-}: {
-  id: string;
-  heading: string;
-  label?: string;
-  children: ReactNode;
-}) {
-  return (
-    <section
-      id={id}
-      className="mt-28 pt-8 border-t border-border/70 scroll-mt-[120px]"
-    >
-      {/* label sits just under the divider, in normal flow */}
-      {label && (
-        <div className="mb-3">
-          <span className="inline-block text-[12px] tracking-[0.18em] uppercase text-accent">
-            {label}
-          </span>
-        </div>
-      )}
-
-      <h2 className="text-[22px] sm:text-[24px] lg:text-[28px] leading-[1.25] font-semibold">
-        {heading}
-      </h2>
-      <div className="mt-4 space-y-5 text-[15px] leading-7 text-foreground/85">
-        {children}
-      </div>
-    </section>
-  );
-}
-
-
-/** Overview block: left rich intro, right facts table, optional impact cards below. */
-export function Overview({
-  intro,
-  facts,
-  impacts,
-}: {
-  intro: ReactNode;
-  facts: Array<{ label: string; value: ReactNode }>;
-  impacts?: Array<{ icon?: string; title: string; body?: string }>;
-}) {
-  return (
-    <div className="space-y-10">
-      <div className="grid lg:grid-cols-[minmax(0,1fr)_380px] gap-8 lg:gap-12">
-        {/* left: narrative intro */}
-        <div className="text-[16px] leading-8">{intro}</div>
-
-        {/* right: key facts table */}
-        <dl className="h-fit rounded-xl border border-border/70 bg-surface divide-y divide-border/60">
-          {facts.map((f, i) => (
-            <div key={i} className="grid grid-cols-[120px_1fr] gap-4 p-4">
-              <dt className="text-[12px] tracking-[0.18em] text-foreground/60 uppercase">
-                {f.label}
-              </dt>
-              <dd className="text-[15px]">{f.value}</dd>
-            </div>
-          ))}
-        </dl>
-      </div>
-
-      {impacts?.length ? (
-        <div className="grid sm:grid-cols-2 gap-6">
-          {impacts.map((c, i) => (
-            <div
-              key={i}
-              className="rounded-xl border border-border/70 bg-surface p-5"
-            >
-              <div className="flex items-center gap-2 text-[15px] font-medium">
-                {c.icon && (
-                  <span className="text-xl" aria-hidden>
-                    {c.icon}
-                  </span>
-                )}
-                {c.title}
-              </div>
-              {c.body && (
-                <p className="mt-2 text-[14px] text-foreground/70">{c.body}</p>
-              )}
-            </div>
-          ))}
-        </div>
-      ) : null}
-    </div>
-  );
-}
-
-export function Figure({
-  src,
-  alt,
-  caption,
-  aspect = "auto",
-}: {
-  src: string;
-  alt: string;
-  caption?: string;
-  aspect?: "auto" | "16/9" | "4/3" | "1/1";
-}) {
-  return (
-    <figure className="my-6">
-      <div
-        className={`rounded-lg overflow-hidden bg-white shadow-[0_1px_2px_rgba(0,0,0,.06)] ${
-          aspect !== "auto" ? "aspect-" + aspect.replace("/", "\\/") : ""
-        }`}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt={alt} className="w-full h-auto" />
-      </div>
-      {caption && (
-        <figcaption className="mt-2 text-[12px] tracking-[0.02em] text-foreground/60">
-          {caption}
-        </figcaption>
-      )}
-    </figure>
-  );
-}
-
-export function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-lg bg-surface p-4 border border-border/70">
-      <div className="text-[11px] tracking-[0.16em] text-foreground/60 uppercase">{label}</div>
-      <div className="mt-1 text-[20px] leading-none">{value}</div>
-    </div>
-  );
-}
-
-function ArrowLeft({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" className={className} aria-hidden="true">
-      <path
-        d="M12.5 4.5 7 10l5.5 5.5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
   );
 }
